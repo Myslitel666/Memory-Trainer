@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "vite dev --open",
 		"build": "vite build",
 		"deploy": "gh-pages -d build -t",
 		"preview": "vite preview",
@@ -23,6 +23,6 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^3.0.8",
 		"gh-pages": "^6.3.0",
-		"svelte-elegant": "^0.1.38"
+		"svelte-elegant": "^0.1.39"
 	}
 }

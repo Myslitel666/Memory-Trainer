@@ -18,7 +18,7 @@
     ['Bs',0,'En']
 ];
 
-  //let theme: any;
+  let theme;
 
   // Подписываемся на изменения темы
   //themeStore.subscribe((value) => {
@@ -64,7 +64,7 @@
   <div class="mgn-top">
     <span style:visibility={shTxtAr}>Count: {cntChr}</span>
     <span style:visibility={shTxtAr} style:margin-left="1.5rem"
-      >Your Record2: <span style:color="green">{record}</span></span
+      >Your Record: <span style:color="green">{record}</span></span
     >
   </div>
   <div class="mgn-top">

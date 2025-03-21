@@ -111,13 +111,14 @@
                   ? ""
                   : "0.75rem"}
                 marginBottom={button === "0" ? "" : "0.75rem"}
-                onclick={() => {
+                onclick={(event: MouseEvent) => {
                   if (textRender !== num) {
                     if (inputStr.length < num.length) {
                       inputStr += button;
                       textRender = inputChr();
                     }
                   }
+                  (event.target as HTMLElement).blur();
                 }}
               >
                 {button}
@@ -155,7 +156,7 @@
   </div>
   <div class="mgn-top">
     <span
-      >Your Record: <span style:color={theme.palette.primary}>{record}</span
+      >Your Record2: <span style:color={theme.palette.primary}>{record}</span
       ></span
     >
   </div>

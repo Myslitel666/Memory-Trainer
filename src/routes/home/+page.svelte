@@ -66,9 +66,9 @@
     >
       {sqnc}
     </p>
-  <div style:display = flex style:column-direction = column>
+  <div style:display = flex style:flex-direction = column>
     {#each btnLines as btnLine}
-      <div style:display = flex style:column-direction = row>
+      <div style:display = flex style:flex-direction = row>
         {#each buttons as button}
           <button>
               {button}

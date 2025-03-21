@@ -121,6 +121,6 @@
     background-color: #f8f8f8;
     margin-right: 0.75rem;
     margin-bottom: 0.75rem;
-    border-radius: 0.25rem;
+    border-radius: 0.75rem;
   }
 </style>

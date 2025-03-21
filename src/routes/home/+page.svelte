@@ -5,13 +5,15 @@
   import { ButtonBox } from "svelte-elegant";
   import { Backspace, Enter } from "svelte-elegant/icons-elegant";
 
-  let shSqnc = "visible";
-  let shTxtAr = "visible";
   let cntChr = 3;
-  let sqnc = "";
   let inputStr = "";
   let isError = 0;
   let record = 0;
+  let rightColor = "";
+  let errColor = "";
+  let shSqnc = "visible";
+  let shTxtAr = "visible";
+  let sqnc = "";
 
   let buttons = [
     [1, 2, 3],
@@ -25,6 +27,14 @@
   // Подписываемся на изменения темы
   themeStore.subscribe((value) => {
     theme = value; //Инициализация объекта темы
+
+    if ($themeMode === "light") {
+      rightColor = theme.palette.primary;
+      errColor = "red";
+    } else {
+      rightColor = "#24F048";
+      errColor = theme.palette.primary;
+    }
   });
 
   function genNumb() {
@@ -65,7 +75,7 @@
 <div class="content">
   <div class="mgn-top">
     <p
-      style:color={isError ? "red" : "green"}
+      style:color={isError ? errColor : rightColor}
       style:font-size={theme.typography.maxSize}
       style:visibility={shSqnc}
     >

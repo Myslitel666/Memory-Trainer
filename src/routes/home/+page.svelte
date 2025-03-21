@@ -11,7 +11,7 @@
   let record = 0;
 
   let buttons = [1,2,3];
-  let btnLines = [1,2,3,4];
+  let btnLines = [0,1,2,3];
 
   function genNumb() {
     sqnc = "";
@@ -71,7 +71,7 @@
       <div style:display = flex style:flex-direction = row>
         {#each buttons as button}
           <button>
-              {button}
+              {btnLine * buttons.length + button}
           </button>
         {/each}
       </div>
@@ -94,7 +94,6 @@
       style:width="15rem"
       style:height="9rem"
       style:padding="0.66rem"
-      style:margin-top="4rem"
       style:font-size="16px"
     >
     </textarea>

@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
   import { Button } from "svelte-elegant";
   import { onMount } from "svelte";
-  import { themeStore, themeMode } from 'svelte-elegant/stores/themeStore';
+  import { themeStore, themeMode } from "svelte-elegant/stores/themeStore";
 
   let shSqnc = "visible";
   let shTxtAr = "visible";
@@ -12,13 +12,13 @@
   let record = 0;
 
   let buttons = [
-    [1,2,3],
-    [4,5,6],
-    [7,8,9],
-    ['Bs',0,'En']
-];
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    ["Bs", 0, "En"],
+  ];
 
-  let theme;
+  let theme: any;
 
   // Подписываемся на изменения темы
   themeStore.subscribe((value) => {
@@ -78,30 +78,27 @@
     >
       {sqnc}
     </p>
-  <div style:display = flex style:flex-direction = column>
-    {#each buttons as buttonLine}
-      <div style:display = flex style:flex-direction = row>
-        {#each buttonLine as button}
-          {#if button != 'Bs' && button != 'En'}
-            <button 
-              style:background-color = {theme.surface.ghost.background} class = btn
-              style:color = {$themeMode === 'light' ? '#474747' : '#fefefe'}
-            >
-              {button}
-            </button>
-          {:else if button == 'Bs'}
-            <button class = btn>
-                Back
-            </button>
-          {:else if button == 'En'}
-            <button class = btn>
-                Enter
-            </button>
-          {/if}
-        {/each}
-      </div>
-    {/each}
-  </div>
+    <div style:display="flex" style:flex-direction="column">
+      {#each buttons as buttonLine}
+        <div style:display="flex" style:flex-direction="row">
+          {#each buttonLine as button}
+            {#if button != "Bs" && button != "En"}
+              <button
+                style:background-color={theme.surface.ghost.background}
+                class="btn"
+                style:color={$themeMode === "light" ? "#474747" : "#fefefe"}
+              >
+                {button}
+              </button>
+            {:else if button == "Bs"}
+              <button class="btn"> Back </button>
+            {:else if button == "En"}
+              <button class="btn"> Enter </button>
+            {/if}
+          {/each}
+        </div>
+      {/each}
+    </div>
   </div>
   <div class="mgn-top" style:visibility={shTxtAr}>
     <Button

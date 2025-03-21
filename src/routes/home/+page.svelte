@@ -18,12 +18,12 @@
     ['Bs',0,'En']
 ];
 
-  let theme: any;
+  //let theme: any;
 
   // Подписываемся на изменения темы
-  themeStore.subscribe((value) => {
-    theme = value; //Инициализация объекта темы
-  });
+  //themeStore.subscribe((value) => {
+    //theme = value; //Инициализация объекта темы
+  //});
 
   function genNumb() {
     sqnc = "";
@@ -83,7 +83,7 @@
       <div style:display = flex style:flex-direction = row>
         {#each buttonLine as button}
           {#if button != 'Bs' && button != 'En'}
-            <button style:background-color = {theme.surface.ghost.background} class = btn>
+            <button class = btn>
               {button}
             </button>
           {:else if button == 'Bs'}

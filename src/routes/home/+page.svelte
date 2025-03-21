@@ -11,9 +11,9 @@
   let record = 0;
   let rightColor = "";
   let errColor = "";
-  let shSqnc = "visible";
-  let shTxtAr = "visible";
-  let sqnc = "";
+  let num = "";
+  let textInput = "";
+  let textRender = "";
 
   let buttons = [
     [1, 2, 3],
@@ -37,25 +37,8 @@
     }
   });
 
-  function genNumb() {
-    sqnc = "";
-
-    for (let i = 0; i < cntChr; i++) {
-      let rnd = Math.floor(Math.random() * 9) + 1;
-      sqnc += rnd;
-    }
-  }
-
-  function toVsbl() {
-    genNumb();
-    shSqnc = "visible";
-    //setTimeout(() => {
-    //shSqnc = "hidden";
-    //}, 1750);
-  }
-
   function checkResult() {
-    if (inputStr === sqnc) {
+    if (inputStr === num) {
       if (cntChr > record) record = cntChr;
       cntChr++;
       isError = 0;
@@ -67,19 +50,45 @@
     inputStr = "";
   }
 
+  function genNumb() {
+    num = "";
+
+    for (let i = 0; i < cntChr; i++) {
+      let rnd = Math.floor(Math.random() * 9) + 1;
+      num += rnd;
+    }
+  }
+
+  function hideNum(num: String) {
+    let hidden = "";
+
+    for (let i = 0; i < num.length; i++) {
+      hidden += "•";
+    }
+
+    return hidden;
+  }
+
+  function toVsbl() {
+    genNumb();
+    textRender = num;
+    setTimeout(() => {
+      textRender = hideNum(num);
+    }, 1750);
+  }
+
   onMount(() => {
     toVsbl();
   });
 </script>
 
 <div class="content">
-  <div class="mgn-top">
+  <div class="mgn-top" style:min-height="2.5rem">
     <p
       style:color={isError ? errColor : rightColor}
       style:font-size={theme.typography.maxSize}
-      style:visibility={shSqnc}
     >
-      {sqnc}
+      {textRender}
     </p>
   </div>
   <div class="mgn-top">
@@ -92,7 +101,7 @@
                 marginRight={Number(button) % 3 === 0 && Number(button) !== 0
                   ? ""
                   : "0.75rem"}
-                marginBottom={Number(button) === 0 ? "0" : "0.75rem"}
+                marginBottom={button === "0" ? "" : "0.75rem"}
                 onclick={() => {
                   console.log(button);
                 }}
@@ -114,12 +123,10 @@
     </div>
   </div>
   <div class="mgn-top">
-    <span style:visibility={shTxtAr}>Count: {cntChr}</span>
+    <span>Count: {cntChr}</span>
   </div>
   <div class="mgn-top">
-    <span style:visibility={shTxtAr}
-      >Your Record: <span style:color="green">{record}</span></span
-    >
+    <span>Your Record: <span style:color="green">{record}</span></span>
   </div>
 </div>
 

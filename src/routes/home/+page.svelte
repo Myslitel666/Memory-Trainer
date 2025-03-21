@@ -70,19 +70,13 @@
   }
 
   function inputChr() {
-    let txtRender = "";
+    let txtRender = inputStr;
 
-    if (inputStr.length <= num.length) {
-      txtRender = inputStr;
-
-      for (let i = 0; i < num.length - inputStr.length; i++) {
-        txtRender += "•";
-      }
-
-      return txtRender;
+    for (let i = 0; i < num.length - inputStr.length; i++) {
+      txtRender += "•";
     }
 
-    return textRender;
+    return txtRender;
   }
 
   function toVsbl() {
@@ -120,15 +114,24 @@
                 marginBottom={button === "0" ? "" : "0.75rem"}
                 onclick={() => {
                   if (textRender !== num) {
-                    inputStr += button;
-                    textRender = inputChr();
+                    if (inputStr.length < num.length) {
+                      inputStr += button;
+                      textRender = inputChr();
+                    }
                   }
                 }}
               >
                 {button}
               </ButtonBox>
             {:else if button == "Bs"}
-              <ButtonBox marginRight="0.75rem" isPrimary={true}>
+              <ButtonBox
+                marginRight="0.75rem"
+                isPrimary={true}
+                onclick={() => {
+                  inputStr = inputStr.slice(0, -1);
+                  textRender = inputChr();
+                }}
+              >
                 <Backspace />
               </ButtonBox>
             {:else if button == "En"}

@@ -92,26 +92,6 @@
     {/each}
   </div>
   </div>
-  <div class="mgn-top">
-    <textarea
-      bind:value={inputStr}
-      on:keydown={(event) => {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          checkResult();
-        }
-      }}
-      style:visibility={shTxtAr}
-      style:border="1px solid #d7d7d7"
-      style:outline="none"
-      style:border-radius="0.25rem"
-      style:width="15rem"
-      style:height="9rem"
-      style:padding="0.66rem"
-      style:font-size="16px"
-    >
-    </textarea>
-  </div>
   <div class="mgn-top" style:visibility={shTxtAr}>
     <Button
       width="11rem"
@@ -138,8 +118,9 @@
   .btn {
     width: 6rem;
     height: 6rem;
-    background-color: #e8e8e8;
-    matgin-right: 0.75rem;
+    background-color: #f8f8f8;
+    margin-right: 0.75rem;
     margin-bottom: 0.75rem;
+    border-radius: 0.25rem;
   }
 </style>

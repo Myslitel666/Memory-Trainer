@@ -69,6 +69,22 @@
     return hidden;
   }
 
+  function inputChr() {
+    let txtRender = "";
+
+    if (inputStr.length <= num.length) {
+      txtRender = inputStr;
+
+      for (let i = 0; i < num.length - inputStr.length; i++) {
+        txtRender += "•";
+      }
+
+      return txtRender;
+    }
+
+    return textRender;
+  }
+
   function toVsbl() {
     genNumb();
     textRender = num;
@@ -83,7 +99,7 @@
 </script>
 
 <div class="content">
-  <div class="mgn-top" style:min-height="2.5rem">
+  <div style:min-height="2.5rem">
     <p
       style:color={isError ? errColor : rightColor}
       style:font-size={theme.typography.maxSize}
@@ -103,7 +119,10 @@
                   : "0.75rem"}
                 marginBottom={button === "0" ? "" : "0.75rem"}
                 onclick={() => {
-                  console.log(button);
+                  if (textRender !== num) {
+                    inputStr += button;
+                    textRender = inputChr();
+                  }
                 }}
               >
                 {button}
@@ -113,7 +132,7 @@
                 <Backspace />
               </ButtonBox>
             {:else if button == "En"}
-              <ButtonBox isPrimary={true}>
+              <ButtonBox isPrimary={true} onclick={checkResult}>
                 <Enter />
               </ButtonBox>
             {/if}

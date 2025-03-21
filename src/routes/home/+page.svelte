@@ -1,6 +1,7 @@
 <script>
   import { Button } from "svelte-elegant";
   import { onMount } from "svelte";
+  import { themeStore } from "svelte-elegant/stores/ColorThemeStore";
 
   let shSqnc = "visible";
   let shTxtAr = "visible";
@@ -16,6 +17,13 @@
     [7,8,9],
     ['Bs',0,'En']
 ];
+
+  let theme: any;
+
+  // Подписываемся на изменения темы
+  themeStore.subscribe((value) => {
+    theme = value; //Инициализация объекта темы
+  });
 
   function genNumb() {
     sqnc = "";
@@ -75,12 +83,12 @@
       <div style:display = flex style:flex-direction = row>
         {#each buttonLine as button}
           {#if button != 'Bs' && button != 'En'}
-            <button class = btn>
+            <button style: background-color = {theme.palette.surface.ghost} class = btn>
               {button}
             </button>
           {:else if button == 'Bs'}
             <button class = btn>
-                Back
+                Back2
             </button>
           {:else if button == 'En'}
             <button class = btn>

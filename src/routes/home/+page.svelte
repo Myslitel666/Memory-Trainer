@@ -105,7 +105,7 @@
       width="11rem"
       onclick={() => {
         checkResult();
-      }}>Check Result2</Button
+      }}>Check Result</Button
     >
   </div>
 </div>

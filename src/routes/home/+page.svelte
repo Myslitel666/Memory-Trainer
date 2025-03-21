@@ -10,8 +10,12 @@
   let isError = 0;
   let record = 0;
 
-  let buttons = [1,2,3];
-  let btnLines = [0,1,2,3];
+  let buttons = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9],
+    ['',0,'']
+];
 
   function genNumb() {
     sqnc = "";
@@ -67,11 +71,11 @@
       {sqnc}
     </p>
   <div style:display = flex style:flex-direction = column>
-    {#each btnLines as btnLine}
+    {#each buttons as buttonLine}
       <div style:display = flex style:flex-direction = row>
-        {#each buttons as button}
+        {#each buttonLine as button}
           <button>
-              {btnLine * buttons.length + button}
+              {button}
           </button>
         {/each}
       </div>

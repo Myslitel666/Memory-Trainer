@@ -17,12 +17,12 @@
     ['Bs',0,'En']
 ];
 
-  //let theme: any;
+  let theme: any;
 
   // Подписываемся на изменения темы
-  // themeStore.subscribe((value) => {
-  //  theme = value; //Инициализация объекта темы
-  //});
+   themeStore.subscribe((value) => {
+    theme = value; //Инициализация объекта темы
+  });
 
   function genNumb() {
     sqnc = "";
@@ -61,7 +61,7 @@
 
 <div class="content">
   <div class="mgn-top">
-    <span style:visibility={shTxtAr}>Numb Count1: {cntChr}</span>
+    <span style:visibility={shTxtAr}>Numb Count: {cntChr}</span>
     <span style:visibility={shTxtAr} style:margin-left="1.5rem"
       >Your Record: <span style:color="green">{record}</span></span
     >

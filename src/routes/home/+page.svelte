@@ -1,7 +1,7 @@
 <script>
   import { Button } from "svelte-elegant";
   import { onMount } from "svelte";
-  //import { themeStore } from 'svelte-elegant/stores/themeStore';
+
   let shSqnc = "visible";
   let shTxtAr = "visible";
   let cntChr = 3;
@@ -16,13 +16,6 @@
     [7,8,9],
     ['Bs',0,'En']
 ];
-
-  //let theme: any;
-
-  // Подписываемся на изменения темы
-  // themeStore.subscribe((value) => {
-   // theme = value; //Инициализация объекта темы
-  //});
 
   function genNumb() {
     sqnc = "";

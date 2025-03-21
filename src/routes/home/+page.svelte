@@ -88,7 +88,7 @@
             </button>
           {:else if button == 'Bs'}
             <button class = btn>
-                Back2
+                Bac
             </button>
           {:else if button == 'En'}
             <button class = btn>

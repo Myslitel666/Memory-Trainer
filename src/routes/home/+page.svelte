@@ -85,7 +85,7 @@
           {#if button != 'Bs' && button != 'En'}
             <button 
               style:background-color = {theme.surface.ghost.background} class = btn
-              style:color = {themeMode === 'light' ? '#474747' : '#fefefe'}
+              style:color = {$themeMode === 'light' ? '#474747' : '#fefefe'}
             >
               {button}
             </button>

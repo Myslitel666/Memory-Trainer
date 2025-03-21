@@ -1,8 +1,7 @@
 <script>
   import { Button } from "svelte-elegant";
   import { onMount } from "svelte";
- // import { themeStore } from "svelte-elegant/stores/ColorThemeStore";
-
+  import { themeStore } from 'svelte-elegant/stores/themeStore';
   let shSqnc = "visible";
   let shTxtAr = "visible";
   let cntChr = 3;
@@ -88,7 +87,7 @@
             </button>
           {:else if button == 'Bs'}
             <button class = btn>
-                Bac
+                Back
             </button>
           {:else if button == 'En'}
             <button class = btn>

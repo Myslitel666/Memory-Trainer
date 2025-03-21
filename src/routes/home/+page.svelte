@@ -82,7 +82,7 @@
                 marginRight={Number(button) % 3 === 0 && Number(button) !== 0
                   ? ""
                   : "0.75rem"}
-                marginBottom="0.75rem"
+                marginBottom={Number(button) === 0 ? "0" : "0.75rem"}
                 onclick={() => {
                   console.log(button);
                 }}
@@ -90,11 +90,7 @@
                 {button}
               </ButtonBox>
             {:else if button == "Bs"}
-              <ButtonBox
-                marginRight="0.75rem"
-                marginBottom="0.75rem"
-                isPrimary={true}
-              >
+              <ButtonBox marginRight="0.75rem" isPrimary={true}>
                 <Backspace />
               </ButtonBox>
             {:else if button == "En"}

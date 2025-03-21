@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { themeStore, themeMode } from "svelte-elegant/stores/themeStore";
   import { ButtonBox } from "svelte-elegant";
+  import { Backspace, Enter } from "svelte-elegant/icons-elegant";
 
   let shSqnc = "visible";
   let shTxtAr = "visible";
@@ -63,15 +64,6 @@
 
 <div class="content">
   <div class="mgn-top">
-    <span style:visibility={shTxtAr}>Count: {cntChr}</span>
-    <span style:visibility={shTxtAr} style:margin-left="1.5rem"
-      >Your Record: <span style:color="green">{record}</span></span
-    >
-  </div>
-  <div class="mgn-top">
-    <p style:visibility={shTxtAr}>
-      {shSqnc === "visible" ? "Remember the number:" : "Enter the number"}
-    </p>
     <p
       style:visibility={shSqnc}
       style:color={isError ? "red" : "green"}
@@ -84,16 +76,30 @@
         <div style:display="flex" style:flex-direction="row">
           {#each buttonLine as button}
             {#if button != "Bs" && button != "En"}
-              <ButtonBox marginRight="0.75rem" marginBottom="0.75rem">
+              <ButtonBox
+                marginRight="0.75rem"
+                marginBottom="0.75rem"
+                onclick={() => {
+                  console.log(button);
+                }}
+              >
                 {button}
               </ButtonBox>
             {:else if button == "Bs"}
-              <ButtonBox marginRight="0.75rem" marginBottom="0.75rem">
-                Back
+              <ButtonBox
+                marginRight="0.75rem"
+                marginBottom="0.75rem"
+                isPrimary={true}
+              >
+                <Backspace />
               </ButtonBox>
             {:else if button == "En"}
-              <ButtonBox marginRight="0.75rem" marginBottom="0.75rem">
-                Enter
+              <ButtonBox
+                marginRight="0.75rem"
+                marginBottom="0.75rem"
+                isPrimary={true}
+              >
+                <Enter />
               </ButtonBox>
             {/if}
           {/each}
@@ -101,12 +107,12 @@
       {/each}
     </div>
   </div>
-  <div class="mgn-top" style:visibility={shTxtAr}>
-    <Button
-      width="11rem"
-      onclick={() => {
-        checkResult();
-      }}>Check Result</Button
+  <div class="mgn-top">
+    <span style:visibility={shTxtAr}>Count: {cntChr}</span>
+  </div>
+  <div class="mgn-top">
+    <span style:visibility={shTxtAr}
+      >Your Record: <span style:color="green">{record}</span></span
     >
   </div>
 </div>

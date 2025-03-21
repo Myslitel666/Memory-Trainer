@@ -64,7 +64,7 @@
   <div class="mgn-top">
     <span style:visibility={shTxtAr}>Count: {cntChr}</span>
     <span style:visibility={shTxtAr} style:margin-left="1.5rem"
-      >Your Record2: <span style:color="green">{record}</span></span
+      >Your Record: <span style:color="green">{record}</span></span
     >
   </div>
   <div class="mgn-top">
@@ -83,7 +83,7 @@
       <div style:display = flex style:flex-direction = row>
         {#each buttonLine as button}
           {#if button != 'Bs' && button != 'En'}
-            <button class = btn>
+            <button style:background-color = {theme.surface.ghost.background} class = btn>
               {button}
             </button>
           {:else if button == 'Bs'}

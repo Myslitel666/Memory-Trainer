@@ -2,6 +2,7 @@
   import { Button } from "svelte-elegant";
   import { onMount } from "svelte";
   import { themeStore, themeMode } from "svelte-elegant/stores/themeStore";
+  import { ButtonBox } from "svelte-elegant";
 
   let shSqnc = "visible";
   let shTxtAr = "visible";
@@ -83,17 +84,17 @@
         <div style:display="flex" style:flex-direction="row">
           {#each buttonLine as button}
             {#if button != "Bs" && button != "En"}
-              <button
-                style:background-color={theme.surface.ghost.background}
-                class="btn"
-                style:color={$themeMode === "light" ? "#474747" : "#fefefe"}
-              >
+              <ButtonBox marginRight="0.75rem" marginBottom="0.75rem">
                 {button}
-              </button>
+              </ButtonBox>
             {:else if button == "Bs"}
-              <button class="btn"> Back </button>
+              <ButtonBox marginRight="0.75rem" marginBottom="0.75rem">
+                Back
+              </ButtonBox>
             {:else if button == "En"}
-              <button class="btn"> Enter </button>
+              <ButtonBox marginRight="0.75rem" marginBottom="0.75rem">
+                Enter
+              </ButtonBox>
             {/if}
           {/each}
         </div>
@@ -121,16 +122,5 @@
 
   .mgn-top {
     margin-top: 1rem;
-  }
-
-  .btn {
-    width: 6rem;
-    height: 6rem;
-    background-color: #f8f8f8;
-    margin-right: 0.75rem;
-    margin-bottom: 0.75rem;
-    border-radius: 0.75rem;
-    font-size: 32px;
-    color: #4a4a4a;
   }
 </style>

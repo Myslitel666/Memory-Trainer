@@ -1,7 +1,7 @@
 <script>
   import { Header } from "svelte-elegant";
 
-  import { Elegant } from "svelte-elegant";
+  import { Elegant } from "svelte-elegant/icons-elegant";
   import { ColorThemeSwitch } from "svelte-elegant";
 
   import { themeStore, themeMode } from "svelte-elegant/stores";

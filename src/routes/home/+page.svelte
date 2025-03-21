@@ -66,15 +66,17 @@
     >
       {sqnc}
     </p>
-  {#each btnLines as btnLine}
-    <div>
-      {#each buttons as button}
-        <button>
-            {button}
-        </button>
-      {/each}
-    </div>
-  {/each}
+  <div style:display = flex style:column-direction = column>
+    {#each btnLines as btnLine}
+      <div style:display = flex style:column-direction = row>
+        {#each buttons as button}
+          <button>
+              {button}
+          </button>
+        {/each}
+      </div>
+    {/each}
+  </div>
   </div>
   <div class="mgn-top">
     <textarea

@@ -12,7 +12,6 @@
   let rightColor = "";
   let errColor = "";
   let num = "";
-  let textInput = "";
   let textRender = "";
 
   let buttons = [
@@ -148,7 +147,10 @@
     <span>Count: {cntChr}</span>
   </div>
   <div class="mgn-top">
-    <span>Your Record: <span style:color="green">{record}</span></span>
+    <span
+      >Your Record: <span style:color={theme.palette.primary}>{record}</span
+      ></span
+    >
   </div>
 </div>
 

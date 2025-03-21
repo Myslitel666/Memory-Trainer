@@ -10,6 +10,9 @@
   let isError = 0;
   let record = 0;
 
+  let buttons = [1,2,3];
+  let btnLines = [1,2,3,4];
+
   function genNumb() {
     sqnc = "";
 

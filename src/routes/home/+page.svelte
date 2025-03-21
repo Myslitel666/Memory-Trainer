@@ -122,7 +122,7 @@
     margin-right: 0.75rem;
     margin-bottom: 0.75rem;
     border-radius: 0.75rem;
-    font-size: 32px;
-    font-color: #4a4a4a;
+    font-size: 24px;
+    color: #333;
   }
 </style>

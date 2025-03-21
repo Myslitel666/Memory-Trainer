@@ -137,7 +137,7 @@
               <ButtonBox
                 isPrimary={true}
                 onclick={() => {
-                  if (inputStr !== "") {
+                  if (inputStr !== "" || num === "") {
                     checkResult();
                   }
                 }}

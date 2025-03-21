@@ -122,5 +122,6 @@
     margin-right: 0.75rem;
     margin-bottom: 0.75rem;
     border-radius: 0.75rem;
+    font-size: 32px;
   }
 </style>

@@ -39,9 +39,9 @@
   function toVsbl() {
     genNumb();
     shSqnc = "visible";
-    setTimeout(() => {
-      shSqnc = "hidden";
-    }, 1750);
+    //setTimeout(() => {
+    //shSqnc = "hidden";
+    //}, 1750);
   }
 
   function checkResult() {
@@ -65,19 +65,23 @@
 <div class="content">
   <div class="mgn-top">
     <p
-      style:visibility={shSqnc}
       style:color={isError ? "red" : "green"}
-      style:margin-top="0.75rem"
+      style:font-size={theme.typography.maxSize}
+      style:visibility={shSqnc}
     >
       {sqnc}
     </p>
+  </div>
+  <div class="mgn-top">
     <div style:display="flex" style:flex-direction="column">
       {#each buttons as buttonLine}
         <div style:display="flex" style:flex-direction="row">
           {#each buttonLine as button}
             {#if button != "Bs" && button != "En"}
               <ButtonBox
-                marginRight="0.75rem"
+                marginRight={Number(button) % 3 === 0 && Number(button) !== 0
+                  ? ""
+                  : "0.75rem"}
                 marginBottom="0.75rem"
                 onclick={() => {
                   console.log(button);
@@ -94,11 +98,7 @@
                 <Backspace />
               </ButtonBox>
             {:else if button == "En"}
-              <ButtonBox
-                marginRight="0.75rem"
-                marginBottom="0.75rem"
-                isPrimary={true}
-              >
+              <ButtonBox isPrimary={true}>
                 <Enter />
               </ButtonBox>
             {/if}

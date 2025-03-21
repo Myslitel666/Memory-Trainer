@@ -17,12 +17,12 @@
     ['Bs',0,'En']
 ];
 
-  let theme: any;
+  //let theme: any;
 
   // Подписываемся на изменения темы
-   themeStore.subscribe((value) => {
-    theme = value; //Инициализация объекта темы
-  });
+  // themeStore.subscribe((value) => {
+   // theme = value; //Инициализация объекта темы
+  //});
 
   function genNumb() {
     sqnc = "";

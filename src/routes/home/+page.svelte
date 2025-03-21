@@ -66,6 +66,15 @@
     >
       {sqnc}
     </p>
+  {#each btnLines as btnLine}
+    <div>
+      {#each buttons as button}
+        <button>
+            {button}
+        </button>
+      {/each}
+    </div>
+  {/each}
   </div>
   <div class="mgn-top">
     <textarea

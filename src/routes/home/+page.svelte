@@ -14,7 +14,7 @@
     [1,2,3],
     [4,5,6],
     [7,8,9],
-    ['',0,'']
+    ['Bs',0,'En']
 ];
 
   function genNumb() {
@@ -74,9 +74,19 @@
     {#each buttons as buttonLine}
       <div style:display = flex style:flex-direction = row>
         {#each buttonLine as button}
-          <button>
+          {#if button != 'Bs' && button != 'En'}
+            <button>
               {button}
-          </button>
+            </button>
+          {:else if button == 'Bs'}
+            <button>
+                Back
+            </button>
+          {:else if button == 'En'}
+            <button>
+                Enter
+            </button>
+          {/if}
         {/each}
       </div>
     {/each}

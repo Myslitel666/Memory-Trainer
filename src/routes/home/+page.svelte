@@ -1,7 +1,7 @@
 <script>
   import { Button } from "svelte-elegant";
   import { onMount } from "svelte";
-  import { themeStore } from 'svelte-elegant/stores/themeStore';
+  import { themeStore, themeMode } from 'svelte-elegant/stores/themeStore';
 
   let shSqnc = "visible";
   let shTxtAr = "visible";
@@ -83,7 +83,10 @@
       <div style:display = flex style:flex-direction = row>
         {#each buttonLine as button}
           {#if button != 'Bs' && button != 'En'}
-            <button style:background-color = {theme.surface.ghost.background} class = btn>
+            <button 
+              style:background-color = {theme.surface.ghost.background} class = btn
+              style:color = {themeMode === 'light' ? '#474747' : '#fefefe'}
+            >
               {button}
             </button>
           {:else if button == 'Bs'}
@@ -105,7 +108,7 @@
       width="11rem"
       onclick={() => {
         checkResult();
-      }}>Check Result</Button
+      }}>Check Result2</Button
     >
   </div>
 </div>

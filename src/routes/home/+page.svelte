@@ -75,15 +75,15 @@
       <div style:display = flex style:flex-direction = row>
         {#each buttonLine as button}
           {#if button != 'Bs' && button != 'En'}
-            <button>
+            <button class = btn>
               {button}
             </button>
           {:else if button == 'Bs'}
-            <button>
+            <button class = btn>
                 Back
             </button>
           {:else if button == 'En'}
-            <button>
+            <button class = btn>
                 Enter
             </button>
           {/if}
@@ -133,5 +133,13 @@
 
   .mgn-top {
     margin-top: 1rem;
+  }
+
+  .btn {
+    width: 6rem;
+    height: 6rem;
+    background-color: #e8e8e8;
+    matgin-right: 0.75rem;
+    margin-bottom: 0.75rem;
   }
 </style>

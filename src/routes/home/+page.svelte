@@ -134,7 +134,14 @@
                 <Backspace />
               </ButtonBox>
             {:else if button == "En"}
-              <ButtonBox isPrimary={true} onclick={checkResult}>
+              <ButtonBox
+                isPrimary={true}
+                onclick={() => {
+                  if (inputStr !== "") {
+                    checkResult();
+                  }
+                }}
+              >
                 <Enter />
               </ButtonBox>
             {/if}

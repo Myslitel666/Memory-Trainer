@@ -83,7 +83,7 @@
       <div style:display = flex style:flex-direction = row>
         {#each buttonLine as button}
           {#if button != 'Bs' && button != 'En'}
-            <button class = btn>
+            <button style:background-color = {theme.palette.surface.ghost} class = btn>
               {button}
             </button>
           {:else if button == 'Bs'}

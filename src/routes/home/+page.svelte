@@ -1,7 +1,7 @@
 <script>
   import { Button } from "svelte-elegant";
   import { onMount } from "svelte";
-  import { themeStore } from "svelte-elegant/stores/ColorThemeStore";
+ // import { themeStore } from "svelte-elegant/stores/ColorThemeStore";
 
   let shSqnc = "visible";
   let shTxtAr = "visible";

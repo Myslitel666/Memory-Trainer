@@ -156,7 +156,7 @@
   </div>
   <div class="mgn-top">
     <span
-      >Your Record: <span style:color={theme.palette.primary}>{record}</span
+      >Your Record2: <span style:color={theme.palette.primary}>{record}</span
       ></span
     >
   </div>

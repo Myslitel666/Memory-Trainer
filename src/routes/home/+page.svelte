@@ -54,7 +54,7 @@
 
 <div class="content">
   <div class="mgn-top">
-    <span style:visibility={shTxtAr}>Numb Count: {cntChr}</span>
+    <span style:visibility={shTxtAr}>Numb1 Count: {cntChr}</span>
     <span style:visibility={shTxtAr} style:margin-left="1.5rem"
       >Your Record: <span style:color="green">{record}</span></span
     >

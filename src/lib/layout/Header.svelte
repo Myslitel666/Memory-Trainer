@@ -1,8 +1,8 @@
 <script>
-  import { Header } from "svelte-elegant";
-
-  import { Elegant } from "svelte-elegant/icons-elegant";
+  import { Brain } from "svelte-elegant/icons-elegant";
   import { ColorThemeSwitch } from "svelte-elegant";
+  import { goto } from "$app/navigation";
+  import { Header } from "svelte-elegant";
 
   import { themeStore, themeMode } from "svelte-elegant/stores";
 
@@ -23,8 +23,8 @@
 </script>
 
 <Header>
-  <button style:gap="0.5rem">
-    <Elegant size="3.25rem" />
+  <button style:gap="0.5rem" onclick={() => goto("/about")}>
+    <Brain />
     <p style:font-size="26px">
       <span
         style:color={svelteColor}

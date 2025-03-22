@@ -10,5 +10,3 @@
     navigate();
   });
 </script>
-
-<p>Hello</p>

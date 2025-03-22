@@ -14,7 +14,7 @@
       width="11rem"
       onclick={() => {
         navigate();
-      }}>Ready to Go2!</Button
+      }}>Ready to Go!</Button
     >
   </div>
 </div>

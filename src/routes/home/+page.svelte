@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from "svelte-elegant";
+  import { isMobile } from "svelte-elegant/utils";
   import { onMount } from "svelte";
   import { themeStore, themeMode } from "svelte-elegant/stores/themeStore";
   import { ButtonBox } from "svelte-elegant";
@@ -89,6 +89,27 @@
   onMount(() => {
     toVsbl();
   });
+
+  function onNumbClick(event: MouseEvent, button: string | number) {
+    if (textRender !== num) {
+      if (inputStr.length < num.length) {
+        inputStr += button;
+        textRender = inputChr();
+      }
+    }
+    (event.target as HTMLElement).blur();
+  }
+
+  function onBackClick() {
+    inputStr = inputStr.slice(0, -1);
+    textRender = inputChr();
+  }
+
+  function onEnterClick() {
+    if (inputStr !== "" || num === "") {
+      checkResult();
+    }
+  }
 </script>
 
 <div class="content">
@@ -111,14 +132,11 @@
                   ? ""
                   : "0.75rem"}
                 marginBottom={button === "0" ? "" : "0.75rem"}
+                ontouchend={(event: MouseEvent) => {
+                  onNumbClick(event, button);
+                }}
                 onclick={(event: MouseEvent) => {
-                  if (textRender !== num) {
-                    if (inputStr.length < num.length) {
-                      inputStr += button;
-                      textRender = inputChr();
-                    }
-                  }
-                  (event.target as HTMLElement).blur();
+                  if (!isMobile()) onNumbClick(event, button);
                 }}
               >
                 {button}
@@ -127,9 +145,9 @@
               <ButtonBox
                 marginRight="0.75rem"
                 isPrimary={true}
+                ontouchend={onBackClick}
                 onclick={() => {
-                  inputStr = inputStr.slice(0, -1);
-                  textRender = inputChr();
+                  if (!isMobile()) onBackClick();
                 }}
               >
                 <Backspace />
@@ -137,10 +155,9 @@
             {:else if button == "En"}
               <ButtonBox
                 isPrimary={true}
+                ontouchend={onEnterClick}
                 onclick={() => {
-                  if (inputStr !== "" || num === "") {
-                    checkResult();
-                  }
+                  if (!isMobile()) onEnterClick();
                 }}
               >
                 <Enter />

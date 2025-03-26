@@ -156,7 +156,8 @@
     </div>
   </div>
   <div class="mgn-top">
-    <span>Count: {cntChr}</span>
+    <span>Count: <span style:color={theme.palette.primary}>{cntChr}</span></span
+    >
   </div>
   <div class="mgn-top">
     <span

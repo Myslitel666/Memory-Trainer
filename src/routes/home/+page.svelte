@@ -96,7 +96,7 @@
         textRender = inputChr();
       }
     }
-    (event.target as HTMLElement).blur();
+    //(event.target as HTMLElement).blur();
   }
 
   function onBackClick() {

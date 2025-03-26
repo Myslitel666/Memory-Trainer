@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { isMobile } from "svelte-elegant/utils";
   import { onMount } from "svelte";
   import { themeStore, themeMode } from "svelte-elegant/stores/themeStore";
   import { ButtonBox } from "svelte-elegant";
@@ -132,11 +131,8 @@
                   ? ""
                   : "0.75rem"}
                 marginBottom={button === "0" ? "" : "0.75rem"}
-                ontouchend={(event: MouseEvent) => {
+                onClick={(event: MouseEvent) => {
                   onNumbClick(event, button);
-                }}
-                onclick={(event: MouseEvent) => {
-                  if (!isMobile()) onNumbClick(event, button);
                 }}
               >
                 {button}
@@ -145,21 +141,12 @@
               <ButtonBox
                 marginRight="0.75rem"
                 isPrimary={true}
-                ontouchend={onBackClick}
-                onclick={() => {
-                  if (!isMobile()) onBackClick();
-                }}
+                onClick={onBackClick}
               >
                 <Backspace />
               </ButtonBox>
             {:else if button == "En"}
-              <ButtonBox
-                isPrimary={true}
-                ontouchend={onEnterClick}
-                onclick={() => {
-                  if (!isMobile()) onEnterClick();
-                }}
-              >
+              <ButtonBox isPrimary={true} onClick={onEnterClick}>
                 <Enter />
               </ButtonBox>
             {/if}

@@ -12,7 +12,7 @@
   <div class="mgn-top">
     <Button
       width="11rem"
-      onclick={() => {
+      onClick={() => {
         navigate();
       }}>Ready to Go!</Button
     >

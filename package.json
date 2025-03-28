@@ -23,6 +23,6 @@
 	"dependencies": {
 		"@sveltejs/adapter-static": "^3.0.8",
 		"gh-pages": "^6.3.0",
-		"svelte-elegant": "^0.2.10"
+		"svelte-elegant": "^0.2.11"
 	}
 }

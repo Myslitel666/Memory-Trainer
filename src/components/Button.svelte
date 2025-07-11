@@ -36,4 +36,12 @@
     color: #333;
     -webkit-tap-highlight-color: transparent;
   }
+
+  /* Планшеты (768px - 1024px) */
+  @media (max-width: 512px) {
+    button {
+      height: 30%;
+      width: 30%;
+    }
+  }
 </style>

@@ -1,6 +1,6 @@
 <script>
   export let onClick = () => {};
-  export let bgColor = "#e7e7e7";
+  export let bgColor = "#efefef";
 
   // Функция для подсветки кнопки и выполнения обработчика
   function handleClick() {
@@ -12,7 +12,7 @@
 
     // 3. Через 300ms возвращаем в исходное состояние
     setTimeout(() => {
-      bgColor = "#e7e7e7";
+      bgColor = "#efefef";
     }, 150);
   }
 </script>
@@ -23,7 +23,6 @@
 
 <style>
   button {
-    color: #303030;
     border: none;
     height: 8rem;
     width: 8rem;

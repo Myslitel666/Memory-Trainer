@@ -35,5 +35,6 @@
     margin-bottom: 0.66rem;
     font-family: "Roboto", sans-serif;
     color: #333;
+    -webkit-tap-highlight-color: transparent;
   }
 </style>

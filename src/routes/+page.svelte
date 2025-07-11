@@ -194,6 +194,7 @@
   .row {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
   p {
     height: 3.88rem;

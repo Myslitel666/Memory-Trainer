@@ -3,7 +3,6 @@
   import Switch from "../input/Switch.svelte";
   import { onMount } from "svelte";
   import "../../styles/app.css";
-  import "../../styles/font.css";
 
   import Light from "./Light.svelte";
   import Dark from "./Dark.svelte";

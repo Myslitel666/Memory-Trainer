@@ -1,7 +1,6 @@
 <script lang="ts">
   import { themeStore } from "../../stores/ThemeStore.js";
   import "../../styles/app.css";
-  import "../../styles/font.css";
 
   let theme: any;
 

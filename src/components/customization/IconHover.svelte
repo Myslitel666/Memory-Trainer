@@ -3,7 +3,6 @@
   import { isMobile } from "../../utils/isMobile.js";
   import { createTouchEffects } from "../../utils/setHoverColor";
   import "../../styles/app.css";
-  import "../../styles/font.css";
 
   export let bgColor = ""; /* Основной цвет */
   export let padding = "0.25rem";

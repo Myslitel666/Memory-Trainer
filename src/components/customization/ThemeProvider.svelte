@@ -3,7 +3,6 @@
   import { onMount } from "svelte";
   import { initialBodyStyle } from "../../utils/initialBodyStyle.js";
   import "../../styles/app.css";
-  import "../../styles/font.css";
 
   export const prerender = true;
 

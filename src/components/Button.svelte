@@ -5,7 +5,6 @@
   import { createTouchEffects } from "../utils/setHoverColor";
   import { isMobile } from "../utils/isMobile.js";
   import "../styles/app.css";
-  import "../styles/font.css";
 
   export let id = ""; /* Уникальный идентификатор элемента */
   export let bgColor = ""; /* Основной цвет */

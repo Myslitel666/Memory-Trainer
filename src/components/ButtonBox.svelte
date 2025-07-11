@@ -3,7 +3,6 @@
   import { onMount, afterUpdate } from "svelte";
   import Button from "./Button.svelte";
   import "../styles/app.css";
-  import "../styles/font.css";
 
   let theme: any;
   let isMobile = false;

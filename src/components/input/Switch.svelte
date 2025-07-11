@@ -3,7 +3,6 @@
   import { onMount } from "svelte";
   import { generateIdElement } from "../../stores/ElementIdStore.js";
   import "../../styles/app.css";
-  import "../../styles/font.css";
 
   export let id = ""; /* Уникальный идентификатор элемента */
   export let color = ""; /* Цвет переключателя */

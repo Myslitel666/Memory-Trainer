@@ -170,7 +170,7 @@
     justify-content: center;
   }
   p {
-    height: 4.5rem;
+    height: 3.88rem;
     font-size: 3rem;
     margin: 0;
     display: flex;
@@ -182,5 +182,6 @@
   span {
     font-size: 1.33rem;
     font-family: "Roboto", sans-serif;
+    margin-bottom: 0.25rem;
   }
 </style>

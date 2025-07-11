@@ -213,4 +213,11 @@
     margin-bottom: 0.25rem;
     color: #555555;
   }
+
+  /* Планшеты */
+  @media (max-width: 512px) {
+    * {
+      font-size: 2.75rem;
+    }
+  }
 </style>

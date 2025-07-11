@@ -17,7 +17,13 @@
   }
 </script>
 
-<button on:click={handleClick} style:background-color={bgColor}>
+<button
+  on:click={handleClick}
+  style:background-color={bgColor}
+  style:display="flex"
+  style:justify-content="center"
+  style:align-items="center"
+>
   <slot />
 </button>
 
@@ -42,6 +48,7 @@
     button {
       height: 6rem;
       width: 6rem;
+      font-size: 3.75rem;
     }
   }
 </style>

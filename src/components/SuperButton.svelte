@@ -49,6 +49,7 @@
     button {
       height: 6rem;
       width: 6rem;
+      font-size: 3.75rem;
     }
   }
 </style>

@@ -118,7 +118,7 @@
     style:margin-top="3rem"
     style:margin-bottom="0.25rem"
   >
-    <p style:color={isError ? errColor : rightColor} style:font-size="2.7rem">
+    <p style:color={isError ? errColor : rightColor} class="render">
       {textRender}
     </p>
   </div>
@@ -207,5 +207,15 @@
   .mgn-top {
     margin-top: 0.25rem;
     font-size: 1.4rem;
+  }
+
+  .render {
+    font-size: 2.7rem;
+  }
+
+  @media (max-width: 392px) {
+    .render {
+      font-size: 2rem;
+    }
   }
 </style>

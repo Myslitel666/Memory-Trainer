@@ -31,8 +31,8 @@
 <style>
   button {
     border: none;
-    height: 7rem;
-    width: 7rem;
+    height: 8rem;
+    width: 8rem;
     border-radius: 1rem;
     font-size: 4rem;
     cursor: pointer;

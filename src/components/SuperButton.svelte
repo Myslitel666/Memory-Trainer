@@ -17,7 +17,14 @@
   }
 </script>
 
-<button on:click={handleClick} style:background-color={bgColor}>
+<button
+  on:click={handleClick}
+  style:background-color={bgColor}
+  style:display="flex"
+  style:justify-content="center"
+  style:align-items="center"
+  style:padding="1.25rem"
+>
   <slot />
 </button>
 
@@ -33,5 +40,6 @@
     margin-right: 0.66rem;
     margin-bottom: 0.66rem;
     font-family: "Roboto", sans-serif;
+    color: #333;
   }
 </style>

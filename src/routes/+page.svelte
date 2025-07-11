@@ -217,7 +217,11 @@
   /* Планшеты */
   @media (max-width: 512px) {
     * {
-      font-size: 2.75rem;
+      font-size: 2.5rem;
+    }
+
+    p {
+      font-size: 2.5rem;
     }
   }
 </style>

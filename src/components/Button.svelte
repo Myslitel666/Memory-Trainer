@@ -23,6 +23,7 @@
   style:display="flex"
   style:justify-content="center"
   style:align-items="center"
+  style:padding="1.25rem"
 >
   <slot />
 </button>
@@ -48,7 +49,7 @@
     button {
       height: 6rem;
       width: 6rem;
-      font-size: 3.75rem;
+      font-size: 3.25rem;
     }
   }
 </style>

@@ -150,6 +150,8 @@
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   class="size-6"
+                  height="4rem"
+                  width="4rem"
                 >
                   <path
                     fill-rule="evenodd"
@@ -165,6 +167,8 @@
                   viewBox="0 0 24 24"
                   fill="currentColor"
                   class="size-6"
+                  height="4rem"
+                  width="4rem"
                 >
                   <path
                     fill-rule="evenodd"

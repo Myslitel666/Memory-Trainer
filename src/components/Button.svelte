@@ -24,8 +24,8 @@
 <style>
   button {
     border: none;
-    height: 8rem;
-    width: 8rem;
+    height: 7rem;
+    width: 7rem;
     border-radius: 1rem;
     font-size: 4rem;
     cursor: pointer;

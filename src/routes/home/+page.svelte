@@ -160,6 +160,7 @@
             style:padding-right="0.97rem"
             style:width="100vw"
             style:max-width="27.5rem"
+            style:box-sizing="border-box"
           >
             <TextField
               bind:this={textFieldElement}

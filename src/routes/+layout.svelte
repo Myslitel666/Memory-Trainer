@@ -1,5 +1,5 @@
 <script>
-  import ThemeProvider from "../components/customization/ThemeProvider.svelte";
+  import { ThemeProvider } from "svelte-elegant";
   import Header from "./Header.svelte";
 </script>
 

@@ -1,9 +1,9 @@
 <script>
-  import ColorThemeSwitch from "./../components/customization/ColorThemeSwitch.svelte";
+  import ColorThemeSwitch from "svelte-elegant/ColorThemeSwitch";
   import { goto } from "$app/navigation";
-  import Header from "../components/layout/Header.svelte";
+  import Header from "svelte-elegant/Header";
 
-  import { themeStore, themeMode } from "../stores/ThemeStore";
+  import { themeMode, themeStore } from "svelte-elegant/stores";
 
   let theme;
 

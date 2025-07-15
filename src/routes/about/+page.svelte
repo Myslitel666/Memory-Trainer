@@ -1,6 +1,10 @@
 <script>
-  import Button from "../../components/Button.svelte";
+  import { Button, Switch } from "svelte-elegant";
   import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+
+  // Загружаем значение из localStorage или используем true по умолчанию
+  let isNumbersAndLetters = true;
 
   function navigate() {
     goto("/home");
@@ -11,11 +15,21 @@
   <p>Are you ready to play?</p>
   <div class="mgn-top">
     <Button
-      width="11rem"
+      width="14.75rem"
       onClick={() => {
+        localStorage.setItem(
+          "isNumbersAndLetters",
+          isNumbersAndLetters.toString()
+        );
         navigate();
       }}>Ready to Go!</Button
     >
+    <div class="switch-container">
+      <p>Use numbers and letters</p>
+      <div style:margin-left="0.5rem">
+        <Switch bind:isChecked={isNumbersAndLetters} />
+      </div>
+    </div>
   </div>
 </div>
 
@@ -31,9 +45,14 @@
 
   .mgn-top {
     margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
-  #sqnc {
-    position: absolute;
+  .switch-container {
+    display: flex;
+    align-items: center;
+    margin-top: 0.58rem;
   }
 </style>

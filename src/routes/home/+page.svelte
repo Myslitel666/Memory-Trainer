@@ -165,6 +165,11 @@
             <TextField
               bind:this={textFieldElement}
               bind:value={inputStr}
+              onkeydown={(e) => {
+                if (e.key === "Enter") {
+                  onEnterClick();
+                }
+              }}
               label="Enter the String"
               disabled={!isHidden}
               width="100%"

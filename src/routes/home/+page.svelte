@@ -179,6 +179,7 @@
               width="100%"
               isPrimary={true}
               onClick={onEnterClick}
+              disabled={!isHidden}
             >
               Next Level
             </Button>

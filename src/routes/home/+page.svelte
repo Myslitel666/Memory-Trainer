@@ -47,7 +47,9 @@
       cntChr++;
       isError = 0;
     } else {
-      cntChr--;
+      if (cntChr > 1) {
+        cntChr--;
+      }
       isError = 1;
     }
     toVsbl();

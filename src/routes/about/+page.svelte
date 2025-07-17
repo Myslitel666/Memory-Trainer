@@ -1,18 +1,31 @@
 <script>
   import { Button, Switch } from "svelte-elegant";
   import { goto } from "$app/navigation";
-  import { onMount } from "svelte";
 
   // Загружаем значение из localStorage или используем true по умолчанию
-  let isNumbersAndLetters = true;
+  let isNumbersAndLetters = false;
+  let longTermMemory = true;
 
-  function navigate() {
-    goto("/home");
+  function navigate(link) {
+    goto(link);
   }
 </script>
 
 <div class="content">
-  <p>Are you ready to play?</p>
+  <p style:font-size="1.2rem" style:font-weight="500">Select Mode</p>
+  <div class="switch-container">
+    <p class="width">Use numbers and letters</p>
+    <div style:margin-left="0.5rem">
+      <Switch bind:isChecked={isNumbersAndLetters} />
+    </div>
+  </div>
+  <div class="switch-container">
+    <p class="width">Long-term memory</p>
+    <div style:margin-left="0.5rem">
+      <Switch bind:isChecked={longTermMemory} />
+    </div>
+  </div>
+
   <div class="mgn-top">
     <Button
       width="14.75rem"
@@ -21,15 +34,13 @@
           "isNumbersAndLetters",
           isNumbersAndLetters.toString()
         );
-        navigate();
+        if (longTermMemory) {
+          navigate("/long-term");
+        } else {
+          navigate("/home");
+        }
       }}>Ready to Go!</Button
     >
-    <div class="switch-container">
-      <p>Use numbers and letters</p>
-      <div style:margin-left="0.5rem">
-        <Switch bind:isChecked={isNumbersAndLetters} />
-      </div>
-    </div>
   </div>
 </div>
 
@@ -43,6 +54,10 @@
     width: 100vw;
   }
 
+  .width {
+    width: 10.5rem;
+  }
+
   .mgn-top {
     margin-top: 1rem;
     display: flex;
@@ -53,6 +68,6 @@
   .switch-container {
     display: flex;
     align-items: center;
-    margin-top: 0.58rem;
+    margin-top: 0.77rem;
   }
 </style>

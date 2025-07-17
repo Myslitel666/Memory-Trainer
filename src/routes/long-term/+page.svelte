@@ -9,7 +9,7 @@
   let isInitialized = false;
 
   let last = "-1";
-  let cntChr = 3;
+  let cntChr = -1;
   let count = 1;
   let inputStr = "";
   let isError = 0;
@@ -161,6 +161,13 @@
   }
 
   onMount(() => {
+    let stringLength = localStorage.getItem("stringLength");
+    if (stringLength) {
+      cntChr = parseInt(stringLength);
+    } else {
+      cntChr = 3;
+    }
+
     const storedValue = localStorage.getItem("isNumbersAndLetters");
 
     if (storedValue) {

@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import ButtonBox from "svelte-elegant/ButtonBox";
   import { TextField, Button } from "svelte-elegant";
+  import { words } from "../../../stores/words";
 
   let textFieldElement: TextField | null = null; // Явно инициализируем как null
   let memoryItems = "Numbers and Letters"; // значение по умолчанию
@@ -45,6 +46,47 @@
     }
   });
 
+  onMount(() => {
+    let stringLength = localStorage.getItem("stringLength");
+    if (stringLength) {
+      cntChr = parseInt(stringLength);
+    } else {
+      cntChr = 3;
+    }
+
+    const storedValue = localStorage.getItem("memoryItems");
+
+    if (storedValue) {
+      memoryItems = storedValue;
+    }
+
+    isInitialized = true;
+
+    toVsbl();
+  });
+
+  $: {
+    if (inputStr.length > cntChr) onBackClick();
+
+    if (memoryItems === "Words" && num.length > 0) {
+      inputStr =
+        inputStr.charAt(0).toUpperCase() + inputStr.slice(1).toLowerCase();
+    } else {
+      inputStr = inputStr.toLocaleUpperCase();
+    }
+
+    if (isHidden) {
+      textRender = inputStr;
+      // Добавляем маскирующие символы
+      const dotsToAdd = Math.max(0, cntChr - textRender.length);
+      textRender += "•".repeat(dotsToAdd);
+    }
+  }
+
+  $: if (memoryItems === "Words") {
+    cntChr = nums[checkIndex].length;
+  }
+
   function checkResult() {
     // Если допущена ошибка
     if (inputStr !== nums[checkIndex]) {
@@ -80,21 +122,26 @@
   function genNumb() {
     num = "";
 
-    for (let i = 0; i < cntChr; i++) {
-      if (memoryItems === "Numbers and Letters") {
-        let NumOrLetter = Math.floor(Math.random() * 2) + 1; //Цифра или буква
-        if (NumOrLetter === 1) {
-          //Если буква
-          const indSymbols = Math.floor(Math.random() * symbols.length);
-          num += symbols[indSymbols];
+    if (memoryItems === "Words") {
+      const indWords = Math.floor(Math.random() * words.length);
+      num = words[indWords];
+    } else {
+      for (let i = 0; i < cntChr; i++) {
+        if (memoryItems === "Numbers and Letters") {
+          let NumOrLetter = Math.floor(Math.random() * 2) + 1; //Цифра или буква
+          if (NumOrLetter === 1) {
+            //Если буква
+            const indSymbols = Math.floor(Math.random() * symbols.length);
+            num += symbols[indSymbols];
+          } else {
+            //Если цифра
+            let rnd = Math.floor(Math.random() * 9);
+            num += rnd;
+          }
         } else {
-          //Если цифра
           let rnd = Math.floor(Math.random() * 9);
           num += rnd;
         }
-      } else {
-        let rnd = Math.floor(Math.random() * 9);
-        num += rnd;
       }
     }
   }
@@ -160,37 +207,6 @@
     toRender();
   }
 
-  onMount(() => {
-    let stringLength = localStorage.getItem("stringLength");
-    if (stringLength) {
-      cntChr = parseInt(stringLength);
-    } else {
-      cntChr = 3;
-    }
-
-    const storedValue = localStorage.getItem("memoryItems");
-
-    if (storedValue) {
-      memoryItems = storedValue;
-    }
-
-    isInitialized = true;
-
-    toVsbl();
-  });
-
-  $: {
-    if (inputStr.length > cntChr) onBackClick();
-
-    inputStr = inputStr.toLocaleUpperCase();
-
-    if (isHidden) {
-      textRender = inputStr;
-      // Добавляем маскирующие символы
-      const dotsToAdd = Math.max(0, cntChr - textRender.length);
-      textRender += "•".repeat(dotsToAdd);
-    }
-  }
   function onNumbClick(event: MouseEvent, button: string | number) {
     if (isHidden) {
       if (inputStr.length < cntChr) {
@@ -221,7 +237,7 @@
     </div>
     <div class="mgn-top">
       <div style:display="flex" style:flex-direction="column">
-        {#if memoryItems === "Numbers and Letters"}
+        {#if memoryItems === "Numbers and Letters" || memoryItems === "Words"}
           <div
             style:margin-bottom="1rem"
             style:padding-left="0.83rem"

@@ -1,11 +1,28 @@
 <script>
   import { Button, Switch, TextField, AutoComplete } from "svelte-elegant";
   import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
 
   // Загружаем значение из localStorage или используем true по умолчанию
-  let memoryItems = "Numbers";
-  let typeMemory = "Long-term Memory";
+  let memoryItems = "";
+  let typeMemory = "";
   let length = "3";
+
+  let isInitialized = false;
+
+  onMount(() => {
+    const memoryItemsStorage = localStorage.getItem("memoryItems");
+    const typeMemoryStorage = localStorage.getItem("typeMemory");
+
+    typeMemory = typeMemoryStorage ? typeMemoryStorage : "Long-term Memory";
+    memoryItems = memoryItemsStorage
+      ? memoryItemsStorage
+      : typeMemory === "Long-term Memory"
+        ? "Words"
+        : "Numbers and Letters";
+
+    isInitialized = true;
+  });
 
   function navigate(link) {
     goto(link);
@@ -28,7 +45,9 @@
           isSelect
           label="Memory Items"
           bind:value={memoryItems}
-          options={["Numbers", "Numbers and Letters"]}
+          options={typeMemory === "Long-term Memory"
+            ? ["Numbers", "Numbers and Letters", "Words"]
+            : ["Numbers", "Numbers and Letters"]}
         />
       </div>
     </div>
@@ -43,7 +62,7 @@
         />
       </div>
     </div>
-    {#if typeMemory === "Long-term Memory"}
+    {#if typeMemory === "Long-term Memory" && memoryItems !== "Words" && isInitialized}
       <div class="switch-container">
         <p class="width">
           {memoryItems === "Numbers" ? "Number" : "String"} Length:
@@ -72,6 +91,7 @@
         width="100%"
         onClick={() => {
           localStorage.setItem("memoryItems", memoryItems);
+          localStorage.setItem("typeMemory", typeMemory);
           let numericLength = parseInt(length);
           if (numericLength > 11) {
             localStorage.setItem("stringLength", "10");

@@ -1,10 +1,10 @@
 <script>
-  import { Button, Switch, TextField } from "svelte-elegant";
+  import { Button, Switch, TextField, AutoComplete } from "svelte-elegant";
   import { goto } from "$app/navigation";
 
   // Загружаем значение из localStorage или используем true по умолчанию
-  let isNumbersAndLetters = false;
-  let longTermMemory = true;
+  let memoryItems = "Numbers";
+  let typeMemory = "Long-term Memory";
   let length = "3";
 
   function navigate(link) {
@@ -12,83 +12,103 @@
   }
 </script>
 
-<div class="content">
-  <p style:font-size="1.2rem" style:font-weight="500">Select Mode</p>
-  <div class="switch-container">
-    <p class="width">Use numbers and letters</p>
-    <div style:margin-left="0.5rem">
-      <Switch bind:isChecked={isNumbersAndLetters} />
-    </div>
-  </div>
-  <div class="switch-container">
-    <p class="width">Long-term memory</p>
-    <div style:margin-left="0.5rem">
-      <Switch bind:isChecked={longTermMemory} />
-    </div>
-  </div>
-  {#if longTermMemory}
+<div class="container">
+  <div class="content">
+    <p
+      style:font-size="1.2rem"
+      style:font-weight="500"
+      style:margin-bottom="0.12rem"
+    >
+      Select Mode
+    </p>
     <div class="switch-container">
-      <p style:width="7rem">
-        {isNumbersAndLetters ? "String" : "Number"} Length:
-      </p>
+      <p class="width">What are we memorizing?</p>
       <div style:margin-left="0.5rem">
-        <TextField
-          label="Length"
-          bind:value={length}
-          width="7rem"
-          oninput={(e) => {
-            if (e) {
-              // Оставляем только цифры
-              e.currentTarget.value = e.currentTarget.value.replace(
-                /[^0-9]/g,
-                ""
-              );
-            }
-            length = e.currentTarget.value; // Обновляем привязанное значение
-          }}
+        <AutoComplete
+          isSelect
+          label="Memory Items"
+          bind:value={memoryItems}
+          options={["Numbers", "Numbers and Letters"]}
         />
       </div>
     </div>
-  {/if}
+    <div class="switch-container">
+      <p class="width">Memory Type:</p>
+      <div style:margin-left="0.5rem">
+        <AutoComplete
+          isSelect
+          label="Select Type"
+          bind:value={typeMemory}
+          options={["Long-term Memory", "Short-Term Memory"]}
+        />
+      </div>
+    </div>
+    {#if typeMemory === "Long-term Memory"}
+      <div class="switch-container">
+        <p class="width">
+          {memoryItems === "Numbers" ? "Number" : "String"} Length:
+        </p>
+        <div style:margin-left="0.5rem">
+          <TextField
+            label="Length"
+            bind:value={length}
+            oninput={(e) => {
+              if (e) {
+                // Оставляем только цифры
+                e.currentTarget.value = e.currentTarget.value.replace(
+                  /[^0-9]/g,
+                  ""
+                );
+              }
+              length = e.currentTarget.value; // Обновляем привязанное значение
+            }}
+          />
+        </div>
+      </div>
+    {/if}
 
-  <div class="mgn-top">
-    <Button
-      width="14.75rem"
-      onClick={() => {
-        localStorage.setItem(
-          "isNumbersAndLetters",
-          isNumbersAndLetters.toString()
-        );
-        let numericLength = parseInt(length);
-        if (numericLength > 11) {
-          localStorage.setItem("stringLength", "10");
-        } else if (numericLength > 0 && numericLength < 11) {
-          localStorage.setItem("stringLength", length);
-        } else if (numericLength < 1) {
-          localStorage.setItem("stringLength", "1");
-        }
-        if (longTermMemory) {
-          navigate("/long-term");
-        } else {
-          navigate("/home");
-        }
-      }}>Ready to Go!</Button
-    >
+    <div class="mgn-top" style:width="100%">
+      <Button
+        width="100%"
+        onClick={() => {
+          localStorage.setItem("memoryItems", memoryItems);
+          let numericLength = parseInt(length);
+          if (numericLength > 11) {
+            localStorage.setItem("stringLength", "10");
+          } else if (numericLength > 0 && numericLength < 11) {
+            localStorage.setItem("stringLength", length);
+          } else if (numericLength < 1) {
+            localStorage.setItem("stringLength", "1");
+          }
+          if (typeMemory === "Long-term Memory") {
+            navigate("/home/long-term");
+          } else {
+            navigate("/home/short-term");
+          }
+        }}>Ready to Go!</Button
+      >
+    </div>
   </div>
 </div>
 
 <style>
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+
   .content {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
-    width: 100vw;
   }
 
   .width {
-    width: 10.5rem;
+    width: 6.75rem;
   }
 
   .mgn-top {

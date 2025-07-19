@@ -5,7 +5,7 @@
   import { TextField, Button } from "svelte-elegant";
 
   let textFieldElement: TextField | null = null; // Явно инициализируем как null
-  let isNumbersAndLetters = true; // значение по умолчанию
+  let memoryItems = "Numbers and Letters"; // значение по умолчанию
   let isInitialized = false;
 
   let cntChr = 3;
@@ -60,7 +60,7 @@
     num = "";
 
     for (let i = 0; i < cntChr; i++) {
-      if (isNumbersAndLetters) {
+      if (memoryItems === "Numbers and Letters") {
         let NumOrLetter = Math.floor(Math.random() * 2) + 1; //Цифра или буква
         if (NumOrLetter === 1) {
           //Если буква
@@ -102,14 +102,11 @@
   }
 
   onMount(() => {
-    const storedValue = localStorage.getItem("isNumbersAndLetters");
+    const storedValue = localStorage.getItem("memoryItems");
 
     if (storedValue) {
-      isNumbersAndLetters = JSON.parse(storedValue) === true ? true : false;
-    } else {
-      isNumbersAndLetters = true;
+      memoryItems = storedValue;
     }
-
     isInitialized = true;
 
     toVsbl();
@@ -155,7 +152,7 @@
     </div>
     <div class="mgn-top">
       <div style:display="flex" style:flex-direction="column">
-        {#if isNumbersAndLetters}
+        {#if memoryItems === "Numbers and Letters"}
           <div
             style:margin-bottom="1rem"
             style:padding-left="0.83rem"

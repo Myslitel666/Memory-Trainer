@@ -229,8 +229,8 @@
 </script>
 
 {#if isInitialized}
-  <div class="content" style:height="43rem">
-    <div style:min-height="3rem" style:margin-top="4rem">
+  <div class="content">
+    <div style:min-height="3rem" style:margin-top="5px">
       <p style:color={isError ? errColor : rightColor} class="render">
         {textRender}
       </p>
@@ -351,7 +351,6 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
   }
 
   .mgn-top {

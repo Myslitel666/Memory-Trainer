@@ -1,5 +1,5 @@
 <script>
-  import { Button, Switch, TextField, AutoComplete } from "svelte-elegant";
+  import { Button, TextField, AutoComplete } from "svelte-elegant";
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
 
@@ -116,7 +116,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     width: 100vw;
   }
 

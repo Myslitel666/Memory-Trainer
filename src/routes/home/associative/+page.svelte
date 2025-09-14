@@ -1,17 +1,16 @@
 <script lang="ts">
   import { themeStore, themeMode } from "svelte-elegant/stores";
   import { onMount } from "svelte";
-  import { TextField, Button, ButtonBox, Box } from "svelte-elegant";
-  import { words } from "../../../stores/words";
+  import { TextField, ButtonBox, Box } from "svelte-elegant";
 
   let textFieldElement: TextField | null = null; // Явно инициализируем как null
-  let memoryItems = "Numbers and Letters"; // значение по умолчанию
   let isInitialized = false;
 
-  let isPairsShown = false;
+  let whoIsShown = "message";
+  let shownPair = {};
+  let pairShownIndex = 0;
   let pairs = [];
   let message = "Remember";
-  let last = "-1";
   const maxCharCount = 2;
   let count = 2;
   let inputStr = "";
@@ -48,8 +47,44 @@
     }
   });
 
+  function genPairs() {
+    pairs = [];
+
+    for (let i = 0; i < count; i++) {
+      const letterInd = Math.floor(Math.random() * letters.length);
+      let number = 0;
+
+      if (count < 10) {
+        number = Math.floor(Math.random() * 10);
+      } else {
+        number = Math.floor(Math.random() * 100);
+      }
+      pairs.push({ letter: letters[letterInd], number: number.toString() });
+    }
+  }
+
+  function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  async function showPair() {
+    for (let i = 0; i < pairs.length; i++) {
+      await delay(1750); // Ждем перед каждым элементом
+      shownPair = {
+        letter: pairs[i].letter,
+        number: pairs[i].number,
+      };
+    }
+    await delay(1750);
+    message = "Repeat";
+    whoIsShown = "message";
+    await delay(1750);
+    whoIsShown = "input";
+  }
+
   onMount(() => {
     genPairs();
+    showPair();
 
     isInitialized = true;
 
@@ -58,19 +93,12 @@
 
   $: if (isInitialized) {
     setTimeout(() => {
-      isPairsShown = true;
-    }, 750);
+      whoIsShown = "pairs";
+    }, 1750);
   }
 
   $: {
     if (inputStr.length > maxCharCount) onBackClick();
-
-    if (memoryItems === "Words" && num.length > 0) {
-      inputStr =
-        inputStr.charAt(0).toUpperCase() + inputStr.slice(1).toLowerCase();
-    } else {
-      inputStr = inputStr.toLocaleUpperCase();
-    }
 
     if (isHidden) {
       textRender = inputStr;
@@ -88,7 +116,6 @@
       checkIndex = 0;
       isHidden = false;
       inputStr = "";
-      toVsbl();
 
       return;
     }
@@ -106,28 +133,9 @@
       count++;
       checkIndex = 0;
       isHidden = false;
-      toVsbl();
     }
 
     inputStr = "";
-  }
-
-  function genPairs() {
-    pairs = [];
-
-    for (let i = 0; i < count; i++) {
-      const letterInd = Math.floor(Math.random() * letters.length);
-      let number = 0;
-
-      if (count < 10) {
-        number = Math.floor(Math.random() * 10);
-      } else {
-        number = Math.floor(Math.random() * 100);
-      }
-      pairs.push({ letter: letters[letterInd], number: number });
-    }
-
-    isPairsShown = false;
   }
 
   function hideNum(num: String) {
@@ -138,55 +146,6 @@
     }
 
     return hidden;
-  }
-
-  function toVsbl() {
-    function toRender() {
-      if (countLocal <= 0) {
-        textRender = hideNum(num);
-        isHidden = true;
-        // Добавляем фиктивную задержку для гарантии обновления DOM
-        setTimeout(() => {
-          textFieldElement?.focus();
-        }, 1);
-        return;
-      }
-
-      let isUnique = false;
-
-      //Если итерация не первая
-      if (countLocal !== count) {
-        while (!isUnique) {
-          if (num !== nums[nums.length - 1]) {
-            isUnique = true;
-          }
-        }
-      }
-      //Если итерация первая
-      else {
-        while (!isUnique) {
-          if (num !== last) {
-            isUnique = true;
-          }
-        }
-      }
-      textRender = num;
-      nums.push(num);
-
-      if (countLocal === 1) {
-        last = num;
-      }
-
-      countLocal--;
-
-      setTimeout(() => {
-        toRender();
-      }, 1750);
-    }
-
-    let countLocal = count;
-    nums = [];
-    toRender();
   }
 
   function onNumbClick(event: MouseEvent, button: string | number) {
@@ -213,7 +172,22 @@
 {#if isInitialized}
   <div class="content">
     <div class="render" style:color={isError === 1 ? errColor : rightColor}>
-      {#if isPairsShown}
+      {#if whoIsShown === "pairs"}
+        <Box
+          color={isError === 1 ? errColor : rightColor}
+          width="93px"
+          height="93px"
+        >
+          <div class="text-box" style:color="#0e7ef0">{shownPair.letter}</div>
+        </Box>
+        <Box width="93px" height="93px">
+          <div class="text-box" style:color={rightColor}>
+            {shownPair.number}
+          </div>
+        </Box>
+      {:else if whoIsShown === "message"}
+        {message}
+      {:else}
         <Box
           color={isError === 1 ? errColor : rightColor}
           width="93px"
@@ -222,10 +196,8 @@
           <div class="text-box" style:color="#0e7ef0">M</div>
         </Box>
         <Box width="93px" height="93px">
-          <div class="text-box" style:color={rightColor}>15</div>
+          <div class="text-box" style:color={rightColor}>?</div>
         </Box>
-      {:else}
-        {message}
       {/if}
     </div>
     <div class="mgn-top">

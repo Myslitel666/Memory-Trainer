@@ -17,8 +17,8 @@
   let count = 2;
   let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
   let checkPairIndex = 0;
-
   let inputStr = "";
+
   let isError = 0;
   let record = 0;
   let rightColor = "";
@@ -141,8 +141,8 @@
   }
 
   function onNumbClick(event: MouseEvent, button: string | number) {
-    if (isHidden) {
-      if (inputStr.length < maxCharCount) {
+    if (whoIsShown === "input") {
+      if (inputStr.length <= maxCharCount) {
         inputStr += button;
       }
     }
@@ -153,9 +153,12 @@
   }
 
   function onEnterClick() {
-    if (whoIsShown === "input" && checkPairIndex < pairs.length) {
-      checkPairIndex = checkPairIndex + 1;
-      //checkResult();
+    if (whoIsShown === "input") {
+      inputStr = "";
+      if (checkPairIndex < pairs.length) {
+        checkPairIndex = checkPairIndex + 1;
+        //checkResult();
+      }
     }
   }
 </script>
@@ -189,7 +192,13 @@
           </div>
         </Box>
         <Box width="93px" height="93px">
-          <div class="text-box" style:color={rightColor}>?</div>
+          <div class="text-box" style:color={rightColor}>
+            {#if inputStr}
+              {inputStr}
+            {:else}
+              ?
+            {/if}
+          </div>
         </Box>
       {/if}
     </div>

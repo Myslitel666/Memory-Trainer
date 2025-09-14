@@ -15,8 +15,7 @@
   let message = "Remember";
   const maxCharCount = 2;
   let count = 2;
-  let letters = "QW";
-  //let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
+  let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
   let checkPairIndex = 0;
 
   let inputStr = "";

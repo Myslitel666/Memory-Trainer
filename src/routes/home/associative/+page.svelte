@@ -7,8 +7,11 @@
   let whoIsShown: "message" | "pairs" | "input" = "message";
   const messageDelay = 1550;
   const pairDelay = 1750;
-  let shownPair = {};
-  let pairs = [];
+  let shownPair: { letter: string; number: string } = {
+    letter: "",
+    number: "",
+  };
+  let pairs: { letter: string; number: string }[] = [];
   let message = "Remember";
   const maxCharCount = 2;
   let count = 3;
@@ -81,7 +84,7 @@
     }
   }
 
-  async function showMessage(msg) {
+  async function showMessage(msg: string) {
     whoIsShown = "message";
     message = msg;
     await delay(messageDelay);

@@ -1,31 +1,27 @@
 <script lang="ts">
   import { themeStore, themeMode } from "svelte-elegant/stores";
   import { onMount } from "svelte";
-  import { TextField, ButtonBox, Box } from "svelte-elegant";
+  import { ButtonBox, Box } from "svelte-elegant";
 
-  let textFieldElement: TextField | null = null; // Явно инициализируем как null
   let isInitialized = false;
-
   let whoIsShown: "message" | "pairs" | "input" = "message";
   const messageDelay = 1550;
   const pairDelay = 1750;
   let shownPair = {};
-  let pairShownIndex = 0;
   let pairs = [];
   let message = "Remember";
   const maxCharCount = 2;
-  let count = 2;
+  let count = 3;
+  let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
+  let checkPairIndex = 0;
+
   let inputStr = "";
   let isError = 0;
   let record = 0;
   let rightColor = "";
   let errColor = "";
-  let num = "";
-  let nums = [""];
   let textRender = "";
   let isHidden = false;
-  let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
-  let checkIndex = 0;
 
   let buttons = [
     [1, 2, 3],
@@ -65,6 +61,10 @@
     }
   }
 
+  function shufflePairs() {
+    pairs = pairs.sort(() => Math.random() - 0.5);
+  }
+
   function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -95,7 +95,9 @@
     genPairs(); // Генерируем пары
     await showMessage("Remember"); // Отображаем сообщение "Remember"
     await showPair(); // Показываем пары (последовательно спустя тайм-код)
+    shufflePairs(); // Рандомизируем порядок пар
     await showMessage("Repeat"); // Отображаем сообщение "Repeat"
+    checkPairIndex = 0; // Сбрасываем индекс пары, с которой будем осуществлять сравнение
     await showInput(); // Приглашаем к вводу
   }
 
@@ -118,46 +120,6 @@
     }
   }
 
-  function checkResult() {
-    // Если допущена ошибка
-    if (inputStr !== nums[checkIndex]) {
-      if (count > 1) count--;
-      isError = 1;
-      checkIndex = 0;
-      isHidden = false;
-      inputStr = "";
-
-      return;
-    }
-
-    //Если значение введено верно
-    isError = 0;
-
-    if (checkIndex != nums.length - 1) {
-      checkIndex++;
-      let hidden = hideNum(nums[checkIndex]);
-      textRender = hidden;
-      isHidden = true;
-    } else {
-      if (count > record) record = count;
-      count++;
-      checkIndex = 0;
-      isHidden = false;
-    }
-
-    inputStr = "";
-  }
-
-  function hideNum(num: String) {
-    let hidden = "";
-
-    for (let i = 0; i < num.length; i++) {
-      hidden += "•";
-    }
-
-    return hidden;
-  }
-
   function onNumbClick(event: MouseEvent, button: string | number) {
     if (isHidden) {
       if (inputStr.length < maxCharCount) {
@@ -171,11 +133,12 @@
   }
 
   function onEnterClick() {
-    checkResult();
-
-    setTimeout(() => {
-      textFieldElement?.focus();
-    }, 1);
+    if (whoIsShown === "input" && checkPairIndex < pairs.length) {
+      console.log("Вошёл");
+      checkPairIndex = checkPairIndex + 1;
+      console.log(checkPairIndex);
+      //checkResult();
+    }
   }
 </script>
 
@@ -203,7 +166,9 @@
           width="93px"
           height="93px"
         >
-          <div class="text-box" style:color="#0e7ef0">M</div>
+          <div class="text-box" style:color="#0e7ef0">
+            {pairs[checkPairIndex].letter}
+          </div>
         </Box>
         <Box width="93px" height="93px">
           <div class="text-box" style:color={rightColor}>?</div>

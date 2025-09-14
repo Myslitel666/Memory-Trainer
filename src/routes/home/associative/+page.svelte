@@ -102,8 +102,8 @@
   }
 
   async function showMessage(msg: string) {
-    whoIsShown = "message";
     message = msg;
+    whoIsShown = "message";
     await delay(messageDelay);
   }
 
@@ -113,9 +113,11 @@
 
   async function startMemoryTraining() {
     genPairs(); // Генерируем пары
-    await showMessage("Remember"); // Отображаем сообщение "Remember"
+    if (isError === 0) await showMessage("Remember");
+    else await showMessage("MISTAKE!"); // Отображаем сообщение "Remember" или "MISTAKE!"
     await showPair(); // Показываем пары (последовательно спустя тайм-код)
     shufflePairs(); // Рандомизируем порядок пар
+    isError = 0;
     await showMessage("Repeat"); // Отображаем сообщение "Repeat"
     checkPairIndex = 0; // Сбрасываем индекс пары, с которой будем осуществлять сравнение
     await showInput(); // Приглашаем к вводу
@@ -154,11 +156,22 @@
 
   function onEnterClick() {
     if (whoIsShown === "input") {
-      inputStr = "";
-      if (checkPairIndex < pairs.length) {
-        checkPairIndex = checkPairIndex + 1;
-        //checkResult();
+      if (inputStr === pairs[checkPairIndex].number) {
+        if (checkPairIndex < pairs.length) {
+          if (checkPairIndex === pairs.length - 1) {
+            count++;
+            startMemoryTraining();
+          } else {
+            checkPairIndex = checkPairIndex + 1;
+          }
+        }
+      } else {
+        isError = 1;
+        if (count > 1) count--;
+        startMemoryTraining();
       }
+
+      inputStr = "";
     }
   }
 </script>
@@ -172,11 +185,11 @@
           width="93px"
           height="93px"
         >
-          <div class="text-box" style:color="#0e7ef0">{shownPair.letter}</div>
+          <div class="text-box" style:color="#0e7ef0">{shownPair?.letter}</div>
         </Box>
         <Box width="93px" height="93px">
           <div class="text-box" style:color={rightColor}>
-            {shownPair.number}
+            {shownPair?.number}
           </div>
         </Box>
       {:else if whoIsShown === "message"}
@@ -188,7 +201,7 @@
           height="93px"
         >
           <div class="text-box" style:color="#0e7ef0">
-            {pairs[checkPairIndex].letter}
+            {pairs[checkPairIndex]?.letter}
           </div>
         </Box>
         <Box width="93px" height="93px">

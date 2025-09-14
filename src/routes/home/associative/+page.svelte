@@ -18,11 +18,11 @@
   let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
   let checkPairIndex = 0;
   let inputStr = "";
-
   let isError = 0;
-  let record = 0;
   let rightColor = "";
   let errColor = "";
+
+  let record = 0;
   let textRender = "";
   let isHidden = false;
 
@@ -113,8 +113,13 @@
 
   async function startMemoryTraining() {
     genPairs(); // Генерируем пары
-    if (isError === 0) await showMessage("Remember");
-    else await showMessage("MISTAKE!"); // Отображаем сообщение "Remember" или "MISTAKE!"
+    if (isError === 0) {
+      if (checkPairIndex === 0) {
+        await showMessage("Remember");
+      } else {
+        await showMessage("GOOD!");
+      }
+    } else await showMessage("MISTAKE!"); // Отображаем сообщение "Remember" или "MISTAKE!"
     await showPair(); // Показываем пары (последовательно спустя тайм-код)
     shufflePairs(); // Рандомизируем порядок пар
     isError = 0;

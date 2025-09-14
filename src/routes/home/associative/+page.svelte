@@ -7,7 +7,7 @@
   let isInitialized = false;
 
   let whoIsShown: "message" | "pairs" | "input" = "message";
-  const messageDelay = 1750;
+  const messageDelay = 1550;
   const pairDelay = 1750;
   let shownPair = {};
   let pairShownIndex = 0;

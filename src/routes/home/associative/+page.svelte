@@ -8,9 +8,12 @@
   let memoryItems = "Numbers and Letters"; // значение по умолчанию
   let isInitialized = false;
 
+  let isPairsShown = false;
+  let pairs = [];
+  let message = "Remember";
   let last = "-1";
-  let cntChr = -1;
-  let count = 1;
+  const maxCharCount = 2;
+  let count = 2;
   let inputStr = "";
   let isError = 0;
   let record = 0;
@@ -20,7 +23,7 @@
   let nums = [""];
   let textRender = "";
   let isHidden = false;
-  let symbols = "QWERTYUIOPASDFGHJKLZXCVBNM";
+  let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
   let checkIndex = 0;
 
   let buttons = [
@@ -46,26 +49,21 @@
   });
 
   onMount(() => {
-    let stringLength = localStorage.getItem("stringLength");
-    if (stringLength) {
-      cntChr = parseInt(stringLength);
-    } else {
-      cntChr = 3;
-    }
-
-    const storedValue = localStorage.getItem("memoryItems");
-
-    if (storedValue) {
-      memoryItems = storedValue;
-    }
+    genPairs();
 
     isInitialized = true;
 
-    toVsbl();
+    //toVsbl();
   });
 
+  $: if (isInitialized) {
+    setTimeout(() => {
+      isPairsShown = true;
+    }, 750);
+  }
+
   $: {
-    if (inputStr.length > cntChr) onBackClick();
+    if (inputStr.length > maxCharCount) onBackClick();
 
     if (memoryItems === "Words" && num.length > 0) {
       inputStr =
@@ -77,13 +75,9 @@
     if (isHidden) {
       textRender = inputStr;
       // Добавляем маскирующие символы
-      const dotsToAdd = Math.max(0, cntChr - textRender.length);
+      const dotsToAdd = Math.max(0, maxCharCount - textRender.length);
       textRender += "•".repeat(dotsToAdd);
     }
-  }
-
-  $: if (memoryItems === "Words") {
-    cntChr = nums[checkIndex].length;
   }
 
   function checkResult() {
@@ -118,31 +112,22 @@
     inputStr = "";
   }
 
-  function genNumb() {
-    num = "";
+  function genPairs() {
+    pairs = [];
 
-    if (memoryItems === "Words") {
-      const indWords = Math.floor(Math.random() * words.length);
-      num = words[indWords];
-    } else {
-      for (let i = 0; i < cntChr; i++) {
-        if (memoryItems === "Numbers and Letters") {
-          let NumOrLetter = Math.floor(Math.random() * 2) + 1; //Цифра или буква
-          if (NumOrLetter === 1) {
-            //Если буква
-            const indSymbols = Math.floor(Math.random() * symbols.length);
-            num += symbols[indSymbols];
-          } else {
-            //Если цифра
-            let rnd = Math.floor(Math.random() * 9);
-            num += rnd;
-          }
-        } else {
-          let rnd = Math.floor(Math.random() * 9);
-          num += rnd;
-        }
+    for (let i = 0; i < count; i++) {
+      const letterInd = Math.floor(Math.random() * letters.length);
+      let number = 0;
+
+      if (count < 10) {
+        number = Math.floor(Math.random() * 10);
+      } else {
+        number = Math.floor(Math.random() * 100);
       }
+      pairs.push({ letter: letters[letterInd], number: number });
     }
+
+    isPairsShown = false;
   }
 
   function hideNum(num: String) {
@@ -172,7 +157,6 @@
       //Если итерация не первая
       if (countLocal !== count) {
         while (!isUnique) {
-          genNumb();
           if (num !== nums[nums.length - 1]) {
             isUnique = true;
           }
@@ -181,7 +165,6 @@
       //Если итерация первая
       else {
         while (!isUnique) {
-          genNumb();
           if (num !== last) {
             isUnique = true;
           }
@@ -208,7 +191,7 @@
 
   function onNumbClick(event: MouseEvent, button: string | number) {
     if (isHidden) {
-      if (inputStr.length < cntChr) {
+      if (inputStr.length < maxCharCount) {
         inputStr += button;
       }
     }
@@ -229,22 +212,21 @@
 
 {#if isInitialized}
   <div class="content">
-    <div class="render">
-      <Box
-        color={isError === 1 ? errColor : rightColor}
-        width="93px"
-        height="93px"
-      >
-        <div class="text-box" style:color="#0e7ef0">M</div>
-      </Box>
-      <Box width="93px" height="93px">
-        <div
-          class="text-box"
-          style:color={isError === 1 ? errColor : rightColor}
+    <div class="render" style:color={isError === 1 ? errColor : rightColor}>
+      {#if isPairsShown}
+        <Box
+          color={isError === 1 ? errColor : rightColor}
+          width="93px"
+          height="93px"
         >
-          5
-        </div>
-      </Box>
+          <div class="text-box" style:color="#0e7ef0">M</div>
+        </Box>
+        <Box width="93px" height="93px">
+          <div class="text-box" style:color={rightColor}>15</div>
+        </Box>
+      {:else}
+        {message}
+      {/if}
     </div>
     <div class="mgn-top">
       <div style:display="flex" style:flex-direction="column">
@@ -308,15 +290,14 @@
       </div>
     </div>
     <div class="mgn-top">
-      <span
-        >Count: <span style:color={theme.palette.primary}>{count}</span></span
-      >
+      <span>
+        Count: <span style:color={theme.palette.primary}>{count}</span>
+      </span>
     </div>
     <div class="mgn-top">
-      <span
-        >Your Record: <span style:color={theme.palette.primary}>{record}</span
-        ></span
-      >
+      <span>
+        Your Record: <span style:color={theme.palette.primary}>{record}</span>
+      </span>
     </div>
   </div>
 {:else}
@@ -345,6 +326,8 @@
     gap: 12px;
     margin-bottom: 12px;
     margin-top: 12px;
+    height: 93px;
+    align-items: center;
   }
 
   @media (max-width: 392px) {

@@ -70,6 +70,8 @@
   }
 
   async function showPair() {
+    whoIsShown = "pairs";
+
     for (let i = 0; i < pairs.length; i++) {
       shownPair = {
         letter: pairs[i].letter,
@@ -90,8 +92,7 @@
   async function startMemoryTraining() {
     genPairs(); // Генерируем пары
     await showMessage("Remember");
-    whoIsShown = "pairs"; // Переключаемся в режим отображения пар
-    showPair(); // Показываем пары спустя тайм-код
+    await showPair(); // Показываем пары спустя тайм-код
   }
 
   onMount(() => {

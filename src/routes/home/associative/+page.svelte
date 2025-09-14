@@ -14,7 +14,7 @@
   let pairs: { letter: string; number: string }[] = [];
   let message = "Remember";
   const maxCharCount = 2;
-  let count = 2;
+  let count = 3;
   let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
   let checkPairIndex = 0;
   let inputStr = "";

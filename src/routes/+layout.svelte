@@ -4,14 +4,14 @@
 </script>
 
 <ThemeProvider>
-  <ScrollbarContainer>
-    <div class="app">
-      <main>
-        <Header />
+  <div class="app">
+    <main>
+      <Header />
+      <ScrollbarContainer>
         <slot />
-      </main>
-    </div>
-  </ScrollbarContainer>
+      </ScrollbarContainer>
+    </main>
+  </div>
 </ThemeProvider>
 
 <svelte:head>

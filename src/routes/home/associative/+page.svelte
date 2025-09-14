@@ -1,8 +1,7 @@
 <script lang="ts">
   import { themeStore, themeMode } from "svelte-elegant/stores";
   import { onMount } from "svelte";
-  import ButtonBox from "svelte-elegant/ButtonBox";
-  import { TextField, Button } from "svelte-elegant";
+  import { TextField, Button, ButtonBox, Box } from "svelte-elegant";
   import { words } from "../../../stores/words";
 
   let textFieldElement: TextField | null = null; // Явно инициализируем как null
@@ -230,10 +229,22 @@
 
 {#if isInitialized}
   <div class="content">
-    <div style:min-height="3rem" style:margin-top="5px">
-      <p style:color={isError ? errColor : rightColor} class="render">
-        {textRender}
-      </p>
+    <div class="render">
+      <Box
+        color={isError === 1 ? errColor : rightColor}
+        width="93px"
+        height="93px"
+      >
+        <div
+          class="text-box"
+          style:color={isError === 1 ? errColor : rightColor}
+        >
+          M
+        </div>
+      </Box>
+      <Box width="93px" height="93px">
+        <div class="text-box" style:color="#ffe000">5</div>
+      </Box>
     </div>
     <div class="mgn-top">
       <div style:display="flex" style:flex-direction="column">
@@ -353,13 +364,21 @@
     flex-direction: column;
   }
 
+  .text-box {
+    cursor: default;
+    user-select: none;
+  }
+
   .mgn-top {
-    margin-top: 0.25rem;
     font-size: 1.4rem;
   }
 
   .render {
     font-size: 2.7rem;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 12px;
+    margin-top: 12px;
   }
 
   @media (max-width: 392px) {

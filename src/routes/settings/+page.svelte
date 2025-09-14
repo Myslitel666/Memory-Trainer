@@ -112,8 +112,10 @@
           }
           if (typeMemory === "Long-Term Memory") {
             navigate("/home/long-term");
-          } else {
+          } else if (typeMemory === "Short-Term Memory") {
             navigate("/home/short-term");
+          } else {
+            navigate("/home/associative");
           }
         }}>Ready to Go!</Button
       >

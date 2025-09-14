@@ -79,7 +79,12 @@
   }
 
   function shufflePairs() {
-    pairs = pairs.sort(() => Math.random() - 0.5);
+    const oldOrderPairs = pairs[0].letter;
+
+    // Рандомизируем, пока не изменится порядок
+    while (pairs[0].letter === oldOrderPairs) {
+      pairs = pairs.sort(() => Math.random() - 0.5);
+    }
   }
 
   function delay(ms: number) {

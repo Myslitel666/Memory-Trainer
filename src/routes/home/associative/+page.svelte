@@ -21,10 +21,7 @@
   let isError = 0;
   let rightColor = "";
   let errColor = "";
-
   let record = 0;
-  let textRender = "";
-  let isHidden = false;
 
   let buttons = [
     [1, 2, 3],
@@ -85,7 +82,7 @@
     pairs = pairs.sort(() => Math.random() - 0.5);
   }
 
-  function delay(ms) {
+  function delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
@@ -138,13 +135,6 @@
 
   $: {
     if (inputStr.length > maxCharCount) onBackClick();
-
-    if (isHidden) {
-      textRender = inputStr;
-      // Добавляем маскирующие символы
-      const dotsToAdd = Math.max(0, maxCharCount - textRender.length);
-      textRender += "•".repeat(dotsToAdd);
-    }
   }
 
   function onNumbClick(event: MouseEvent, button: string | number) {
@@ -164,6 +154,7 @@
       if (inputStr === pairs[checkPairIndex].number) {
         if (checkPairIndex < pairs.length) {
           if (checkPairIndex === pairs.length - 1) {
+            if (count > record) record = count;
             count++;
             startMemoryTraining();
           } else {

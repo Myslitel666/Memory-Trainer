@@ -14,8 +14,9 @@
   let pairs: { letter: string; number: string }[] = [];
   let message = "Remember";
   const maxCharCount = 2;
-  let count = 3;
-  let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
+  let count = 2;
+  let letters = "QW";
+  //let letters = "QWERTYUIOPASDFGHJKLZXCVBNM";
   let checkPairIndex = 0;
 
   let inputStr = "";
@@ -50,16 +51,33 @@
 
   async function genPairs() {
     pairs = [];
+    let usedLetters: string[] = [];
+    let usedNumbers: number[] = [];
+    let letterInd = 0;
+    let number = 0;
 
     for (let i = 0; i < count; i++) {
-      const letterInd = Math.floor(Math.random() * letters.length);
-      let number = 0;
+      let isLetterNotUnique = true;
+      let isNumberNotUnique = true;
 
-      if (count < 10) {
-        number = Math.floor(Math.random() * 10);
-      } else {
-        number = Math.floor(Math.random() * 100);
+      while (isLetterNotUnique) {
+        letterInd = Math.floor(Math.random() * letters.length);
+        if (!usedLetters.includes(letters[letterInd]))
+          isLetterNotUnique = false;
       }
+
+      while (isNumberNotUnique) {
+        if (count < 10) {
+          number = Math.floor(Math.random() * 10);
+        } else {
+          number = Math.floor(Math.random() * 100);
+        }
+        if (!usedNumbers.includes(number)) isNumberNotUnique = false;
+      }
+
+      usedLetters.push(letters[letterInd]);
+      usedNumbers.push(number);
+
       pairs.push({ letter: letters[letterInd], number: number.toString() });
     }
   }
@@ -137,9 +155,7 @@
 
   function onEnterClick() {
     if (whoIsShown === "input" && checkPairIndex < pairs.length) {
-      console.log("Вошёл");
       checkPairIndex = checkPairIndex + 1;
-      console.log(checkPairIndex);
       //checkResult();
     }
   }

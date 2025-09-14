@@ -77,9 +77,7 @@
       };
       await delay(pairDelay);
     }
-    message = "Repeat";
-    whoIsShown = "message";
-    await delay(messageDelay);
+    await showMessage("Repeat");
     whoIsShown = "input";
   }
 

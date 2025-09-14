@@ -7,7 +7,7 @@
   let isInitialized = false;
 
   let whoIsShown: "message" | "pairs" | "input" = "message";
-  const messageDelay = 1000;
+  const messageDelay = 1750;
   const pairDelay = 1750;
   let shownPair = {};
   let pairShownIndex = 0;
@@ -84,8 +84,8 @@
   }
 
   async function showMessage(msg) {
-    message = msg;
     whoIsShown = "message";
+    message = msg;
     await delay(messageDelay);
   }
 

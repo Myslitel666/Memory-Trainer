@@ -79,8 +79,6 @@
       };
       await delay(pairDelay);
     }
-    await showMessage("Repeat");
-    whoIsShown = "input";
   }
 
   async function showMessage(msg) {
@@ -89,10 +87,16 @@
     await delay(messageDelay);
   }
 
+  async function showInput() {
+    whoIsShown = "input";
+  }
+
   async function startMemoryTraining() {
     genPairs(); // Генерируем пары
-    await showMessage("Remember");
-    await showPair(); // Показываем пары спустя тайм-код
+    await showMessage("Remember"); // Отображаем сообщение "Remember"
+    await showPair(); // Показываем пары (последовательно спустя тайм-код)
+    await showMessage("Repeat"); // Отображаем сообщение "Repeat"
+    await showInput(); // Приглашаем к вводу
   }
 
   onMount(() => {

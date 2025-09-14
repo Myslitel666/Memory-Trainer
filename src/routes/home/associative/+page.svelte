@@ -89,12 +89,9 @@
 
   async function startMemoryTraining() {
     genPairs(); // Генерируем пары
-    whoIsShown = "message"; // Отображаем сообщение (Remember)
-    setTimeout(() => {
-      // Даём задержку для remember
-      whoIsShown = "pairs"; // Переключаемся в режим отображения пар
-      showPair(); // Показываем пары спустя тайм-код
-    }, messageDelay);
+    await showMessage("Remember");
+    whoIsShown = "pairs"; // Переключаемся в режим отображения пар
+    showPair(); // Показываем пары спустя тайм-код
   }
 
   onMount(() => {

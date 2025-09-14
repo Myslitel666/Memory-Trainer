@@ -6,7 +6,9 @@
   let textFieldElement: TextField | null = null; // Явно инициализируем как null
   let isInitialized = false;
 
-  let whoIsShown = "message";
+  let whoIsShown: "message" | "pairs" | "input" = "message";
+  const messageDelay = 1000;
+  const pairDelay = 1750;
   let shownPair = {};
   let pairShownIndex = 0;
   let pairs = [];
@@ -47,7 +49,7 @@
     }
   });
 
-  function genPairs() {
+  async function genPairs() {
     pairs = [];
 
     for (let i = 0; i < count; i++) {
@@ -69,33 +71,41 @@
 
   async function showPair() {
     for (let i = 0; i < pairs.length; i++) {
-      await delay(1750); // Ждем перед каждым элементом
       shownPair = {
         letter: pairs[i].letter,
         number: pairs[i].number,
       };
+      await delay(pairDelay);
     }
-    await delay(1750);
     message = "Repeat";
     whoIsShown = "message";
-    await delay(1750);
+    await delay(messageDelay);
     whoIsShown = "input";
   }
 
+  async function showMessage(msg) {
+    message = msg;
+    whoIsShown = "message";
+    await delay(messageDelay);
+  }
+
+  async function startMemoryTraining() {
+    genPairs(); // Генерируем пары
+    whoIsShown = "message"; // Отображаем сообщение (Remember)
+    setTimeout(() => {
+      // Даём задержку для remember
+      whoIsShown = "pairs"; // Переключаемся в режим отображения пар
+      showPair(); // Показываем пары спустя тайм-код
+    }, messageDelay);
+  }
+
   onMount(() => {
-    genPairs();
-    showPair();
+    startMemoryTraining();
 
     isInitialized = true;
 
     //toVsbl();
   });
-
-  $: if (isInitialized) {
-    setTimeout(() => {
-      whoIsShown = "pairs";
-    }, 1750);
-  }
 
   $: {
     if (inputStr.length > maxCharCount) onBackClick();

@@ -235,15 +235,15 @@
         width="93px"
         height="93px"
       >
+        <div class="text-box" style:color="#0e7ef0">M</div>
+      </Box>
+      <Box width="93px" height="93px">
         <div
           class="text-box"
           style:color={isError === 1 ? errColor : rightColor}
         >
-          M
+          5
         </div>
-      </Box>
-      <Box width="93px" height="93px">
-        <div class="text-box" style:color="#ffe000">5</div>
       </Box>
     </div>
     <div class="mgn-top">

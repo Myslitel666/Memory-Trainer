@@ -8,16 +8,24 @@
   let typeMemory = "";
   let length = "3";
 
+  const shortTermMemoryItems = ["Numbers", "Numbers and Letters"];
+
   let isInitialized = false;
+
+  $: {
+    if (typeMemory === "Short-Term Memory" && memoryItems === "Words") {
+      memoryItems = shortTermMemoryItems[0];
+    }
+  }
 
   onMount(() => {
     const memoryItemsStorage = localStorage.getItem("memoryItems");
     const typeMemoryStorage = localStorage.getItem("typeMemory");
 
-    typeMemory = typeMemoryStorage ? typeMemoryStorage : "Long-term Memory";
+    typeMemory = typeMemoryStorage ? typeMemoryStorage : "Long-Term Memory";
     memoryItems = memoryItemsStorage
       ? memoryItemsStorage
-      : typeMemory === "Long-term Memory"
+      : typeMemory === "Long-Term Memory"
         ? "Words"
         : "Numbers and Letters";
 
@@ -38,19 +46,21 @@
     >
       Select Mode
     </p>
-    <div class="switch-container">
-      <p class="width">What are we memorizing?</p>
-      <div style:margin-left="0.5rem">
-        <AutoComplete
-          isSelect
-          label="Memory Items"
-          bind:value={memoryItems}
-          options={typeMemory === "Long-term Memory"
-            ? ["Numbers", "Numbers and Letters", "Words"]
-            : ["Numbers", "Numbers and Letters"]}
-        />
+    {#if typeMemory !== "Associative"}
+      <div class="switch-container">
+        <p class="width">What are we memorizing?</p>
+        <div style:margin-left="0.5rem">
+          <AutoComplete
+            isSelect
+            label="Memory Items"
+            bind:value={memoryItems}
+            options={typeMemory === "Long-Term Memory"
+              ? ["Numbers", "Numbers and Letters", "Words"]
+              : shortTermMemoryItems}
+          />
+        </div>
       </div>
-    </div>
+    {/if}
     <div class="switch-container">
       <p class="width">Memory Type:</p>
       <div style:margin-left="0.5rem">
@@ -58,11 +68,11 @@
           isSelect
           label="Select Type"
           bind:value={typeMemory}
-          options={["Long-term Memory", "Short-Term Memory"]}
+          options={["Long-Term Memory", "Short-Term Memory", "Associative"]}
         />
       </div>
     </div>
-    {#if typeMemory === "Long-term Memory" && memoryItems !== "Words" && isInitialized}
+    {#if typeMemory === "Long-Term Memory" && memoryItems !== "Words" && isInitialized}
       <div class="switch-container">
         <p class="width">
           {memoryItems === "Numbers" ? "Number" : "String"} Length:
@@ -100,7 +110,7 @@
           } else if (numericLength < 1) {
             localStorage.setItem("stringLength", "1");
           }
-          if (typeMemory === "Long-term Memory") {
+          if (typeMemory === "Long-Term Memory") {
             navigate("/home/long-term");
           } else {
             navigate("/home/short-term");

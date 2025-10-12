@@ -55,7 +55,7 @@
             label="Memory Items"
             bind:value={memoryItems}
             options={typeMemory === "Long-Term Memory"
-              ? ["Numbers", "Numbers and Letters", "Words"]
+              ? ["Numbers", "Numbers and Letters", "Words", "Colors"]
               : shortTermMemoryItems}
           />
         </div>
@@ -72,7 +72,7 @@
         />
       </div>
     </div>
-    {#if typeMemory === "Long-Term Memory" && memoryItems !== "Words" && isInitialized}
+    {#if typeMemory === "Long-Term Memory" && memoryItems !== "Words" && memoryItems !== "Colors" && isInitialized}
       <div class="switch-container">
         <p class="width">
           {memoryItems === "Numbers" ? "Number" : "String"} Length:
@@ -111,7 +111,8 @@
             localStorage.setItem("stringLength", "1");
           }
           if (typeMemory === "Long-Term Memory") {
-            navigate("/home/long-term");
+            if (memoryItems != "Colors") navigate("/home/long-term");
+            else navigate("/home/colors");
           } else if (typeMemory === "Short-Term Memory") {
             navigate("/home/short-term");
           } else {

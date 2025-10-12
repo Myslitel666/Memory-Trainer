@@ -13,7 +13,10 @@
   let isInitialized = false;
 
   $: {
-    if (typeMemory === "Short-Term Memory" && memoryItems === "Words") {
+    if (
+      typeMemory === "Short-Term Memory" &&
+      (memoryItems === "Words" || memoryItems === "Colors")
+    ) {
       memoryItems = shortTermMemoryItems[0];
     }
   }
@@ -81,6 +84,7 @@
           <TextField
             label="Length"
             bind:value={length}
+            width="200px"
             oninput={(e) => {
               if (e) {
                 // Оставляем только цифры

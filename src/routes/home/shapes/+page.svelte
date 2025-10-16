@@ -3,60 +3,53 @@
   import { onMount } from "svelte";
   import { ButtonBox, Box } from "svelte-elegant";
 
+  import {
+    Circle,
+    Square,
+    Diamonds,
+    Pentagon,
+    Triangle,
+    Hexagon,
+    Heart,
+    Dodecahedron,
+    Cube,
+    Cylinder,
+    Cone,
+    Hexahedron,
+  } from "svelte-elegant/icons-elegant";
+
   let isInitialized = false;
   let whoIsShown: "message" | "pairs" | "input" = "message";
   const messageDelay = 1550;
   const pairDelay = 1750;
-  let shownColorInd = 0;
+  let shownShape = "";
   let message = "Remember";
   const maxCharCount = 2;
   let count = 3;
-  let colors: number[] = [];
+  let shapes: string[] = [];
 
-  $: colorVariants =
-    $themeMode === "light"
-      ? [
-          "#f84242",
-          "#f753ef",
-          "#8645f5",
-          "#7cdeff",
-          "#4c8dff",
-          "#3030b7",
-          "#00ffad",
-          "#4ce332",
-          "#96c615",
-          "#f18d14",
-          "#f7c32c",
-          "#f7ee2d",
-        ]
-      : [
-          "#f62626",
-          "#ff33ec",
-          "#9100ff",
-          "#7cdeff",
-          "#03a6ff",
-          "#0033f0",
-          "#00ffad",
-          "#4ce332",
-          "#96c615",
-          "#f18d14",
-          "#f7c32c",
-          "#f7ee2d",
-        ];
+  const shapesVariants = [
+    "Circle",
+    "Square",
+    "Diamonds",
+    "Pentagon",
+    "Triangle",
+    "Hexagon",
+    "Heart",
+    "Dodecahedron",
+    "Cube",
+    "Cylinder",
+    "Cone",
+    "Hexahedron",
+  ];
 
-  let checkColorIndex = 0;
-  let inputColor = "";
+  const ShapeSize = "66px";
+  let checkShapeIndex = 0;
+  let inputShape = "";
   let isError = 0;
   let rightColor = "";
   let errColor = "";
   let record = 0;
-
-  let buttonLines = [
-    [[], [], []],
-    [[], [], []],
-    [[], [], []],
-    [[], [], []],
-  ];
 
   let theme: any;
 
@@ -73,34 +66,35 @@
     }
   });
 
-  async function genColors() {
-    let usedColors: number[] = [];
-    let colorInd = 0;
+  async function genShapes() {
+    let usedShapes: string[] = [];
+    let shapeInd = 0;
 
     for (let i = 0; i < count; i++) {
-      let isColorNotUnique = true;
+      let isShapeNotUnique = true;
 
-      while (isColorNotUnique) {
-        colorInd = Math.floor(Math.random() * colorVariants.length);
-        const lastTwo = usedColors.slice(-2);
-        if (!lastTwo.includes(colorInd)) isColorNotUnique = false; //Хотя бы последние 2 цвета должны быть уникальны
+      while (isShapeNotUnique) {
+        shapeInd = Math.floor(Math.random() * shapesVariants.length);
+        const lastTwo = usedShapes.slice(-2);
+        if (!lastTwo.includes(shapesVariants[shapeInd]))
+          isShapeNotUnique = false; //Хотя бы последние 2 фигуры должны быть уникальны
       }
 
-      usedColors.push(colorInd);
+      usedShapes.push(shapesVariants[shapeInd]);
     }
 
-    colors = usedColors;
+    shapes = usedShapes;
   }
 
   function delay(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
-  async function showColor() {
+  async function showShape() {
     whoIsShown = "pairs";
 
-    for (let i = 0; i < colors.length; i++) {
-      shownColorInd = colors[i];
+    for (let i = 0; i < shapes.length; i++) {
+      shownShape = shapes[i];
       await delay(pairDelay);
     }
   }
@@ -116,19 +110,19 @@
   }
 
   async function startMemoryTraining() {
-    inputColor = "";
-    genColors(); // Генерируем пары
+    inputShape = "";
+    genShapes(); // Генерируем пары
     if (isError === 0) {
-      if (checkColorIndex === 0) {
+      if (checkShapeIndex === 0) {
         await showMessage("Remember");
       } else {
         await showMessage("GOOD!");
       }
     } else await showMessage("MISTAKE!"); // Отображаем сообщение "Remember" или "MISTAKE!"
-    await showColor(); // Показываем пары (последовательно спустя тайм-код)
+    await showShape(); // Показываем пары (последовательно спустя тайм-код)
     isError = 0;
     await showMessage("Repeat"); // Отображаем сообщение "Repeat"
-    checkColorIndex = 0; // Сбрасываем индекс пары, с которой будем осуществлять сравнение
+    checkShapeIndex = 0; // Сбрасываем индекс пары, с которой будем осуществлять сравнение
     await showInput(); // Приглашаем ко вводу
   }
 
@@ -138,19 +132,18 @@
     isInitialized = true;
   });
 
-  function onNumbClick(event: MouseEvent, row: number, col: number) {
+  function onShapeClick(shClick: string) {
     if (whoIsShown === "input") {
-      let selectedIndex = 3 * row + col;
-      inputColor = colorVariants[selectedIndex];
+      inputShape = shClick;
 
-      if (selectedIndex === colors[checkColorIndex]) {
-        if (checkColorIndex < colors.length) {
-          if (checkColorIndex === colors.length - 1) {
+      if (inputShape === shapes[checkShapeIndex]) {
+        if (checkShapeIndex < shapes.length) {
+          if (checkShapeIndex === shapes.length - 1) {
             if (count > record) record = count;
             count++;
             startMemoryTraining();
           } else {
-            checkColorIndex = checkColorIndex + 1;
+            checkShapeIndex = checkShapeIndex + 1;
           }
         }
       } else {
@@ -166,37 +159,181 @@
   <div class="content">
     <div class="render" style:color={isError === 1 ? errColor : rightColor}>
       {#if whoIsShown === "pairs"}
-        <div
-          class="color-box"
-          style:background-color={colorVariants[shownColorInd]}
-        ></div>
+        {#if shownShape === "Circle"}
+          <Circle size={ShapeSize} />
+        {:else if shownShape === "Square"}
+          <Square size={ShapeSize} />
+        {:else if shownShape === "Diamonds"}
+          <Diamonds size={ShapeSize} />
+        {:else if shownShape === "Pentagon"}
+          <Pentagon size={ShapeSize} />
+        {:else if shownShape === "Triangle"}
+          <Triangle size={ShapeSize} />
+        {:else if shownShape === "Hexagon"}
+          <Hexagon size={ShapeSize} />
+        {:else if shownShape === "Heart"}
+          <Heart size={ShapeSize} />
+        {:else if shownShape === "Dodecahedron"}
+          <Dodecahedron size={ShapeSize} />
+        {:else if shownShape === "Cube"}
+          <Cube size={ShapeSize} />
+        {:else if shownShape === "Cylinder"}
+          <Cylinder size={ShapeSize} />
+        {:else if shownShape === "Cone"}
+          <Cone size={ShapeSize} />
+        {:else}
+          <Hexahedron size={ShapeSize} />
+        {/if}
       {:else if whoIsShown === "message"}
         {message}
-      {:else if inputColor}
-        <div class="color-box" style:background-color={inputColor}></div>
+      {:else if inputShape}
+        {#if inputShape === "Circle"}
+          <Circle size={ShapeSize} />
+        {:else if inputShape === "Square"}
+          <Square size={ShapeSize} />
+        {:else if inputShape === "Diamonds"}
+          <Diamonds size={ShapeSize} />
+        {:else if inputShape === "Pentagon"}
+          <Pentagon size={ShapeSize} />
+        {:else if inputShape === "Triangle"}
+          <Triangle size={ShapeSize} />
+        {:else if inputShape === "Hexagon"}
+          <Hexagon size={ShapeSize} />
+        {:else if inputShape === "Heart"}
+          <Heart size={ShapeSize} />
+        {:else if inputShape === "Dodecahedron"}
+          <Dodecahedron size={ShapeSize} />
+        {:else if inputShape === "Cube"}
+          <Cube size={ShapeSize} />
+        {:else if inputShape === "Cylinder"}
+          <Cylinder size={ShapeSize} />
+        {:else if inputShape === "Cone"}
+          <Cone size={ShapeSize} />
+        {:else}
+          <Hexahedron size={ShapeSize} />
+        {/if}
       {:else}
-        <Box width="93px" height="93px">
-          <div class="text-box" style:color={rightColor}>?</div>
-        </Box>
+        <div class="text-box" style:color={rightColor}>?</div>
       {/if}
     </div>
     <div class="mgn-top">
       <div style:display="flex" style:flex-direction="column">
-        {#each buttonLines as buttonLine, i}
-          <div style:display="flex" style:flex-direction="row" style:gap="11px">
-            {#each buttonLine as button, j}
-              <ButtonBox
-                filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-                bgColor={colorVariants[3 * i + j]}
-                marginBottom="11px"
-                isPrimary
-                onClick={(event: MouseEvent) => {
-                  onNumbClick(event, i, j);
-                }}
-              ></ButtonBox>
-            {/each}
-          </div>
-        {/each}
+        <div style:display="flex" style:flex-direction="row" style:gap="11px">
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Circle");
+            }}
+          >
+            <Circle size="45px" />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Triangle");
+            }}
+          >
+            <Triangle size="49px" />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Square");
+            }}
+          >
+            <Square size="42px" />
+          </ButtonBox>
+        </div>
+        <div style:display="flex" style:flex-direction="row" style:gap="11px">
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Diamonds");
+            }}
+          >
+            <Diamonds />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Pentagon");
+            }}
+          >
+            <Pentagon />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Hexagon");
+            }}
+          >
+            <Hexagon />
+          </ButtonBox>
+        </div>
+        <div style:display="flex" style:flex-direction="row" style:gap="11px">
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Heart");
+            }}
+          >
+            <Heart />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Dodecahedron");
+            }}
+          >
+            <Dodecahedron />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Cube");
+            }}
+          >
+            <Cube />
+          </ButtonBox>
+        </div>
+        <div style:display="flex" style:flex-direction="row" style:gap="11px">
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Cylinder");
+            }}
+          >
+            <Cylinder />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Cone");
+            }}
+          >
+            <Cone />
+          </ButtonBox>
+          <ButtonBox
+            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+            marginBottom="11px"
+            onClick={(event: MouseEvent) => {
+              onShapeClick("Hexahedron");
+            }}
+          >
+            <Hexahedron />
+          </ButtonBox>
+        </div>
       </div>
     </div>
     <div class="mgn-top">
@@ -230,6 +367,7 @@
   .text-box {
     cursor: default;
     user-select: none;
+    font-size: 50px;
   }
 
   .mgn-top {

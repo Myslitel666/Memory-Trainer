@@ -15,7 +15,9 @@
   $: {
     if (
       typeMemory === "Short-Term Memory" &&
-      (memoryItems === "Words" || memoryItems === "Colors")
+      (memoryItems === "Words" ||
+        memoryItems === "Colors" ||
+        memoryItems === "Shapes")
     ) {
       memoryItems = shortTermMemoryItems[0];
     }
@@ -58,7 +60,7 @@
             label="Memory Items"
             bind:value={memoryItems}
             options={typeMemory === "Long-Term Memory"
-              ? ["Numbers", "Numbers and Letters", "Words", "Colors"]
+              ? ["Numbers", "Numbers and Letters", "Words", "Colors", "Shapes"]
               : shortTermMemoryItems}
           />
         </div>
@@ -75,7 +77,7 @@
         />
       </div>
     </div>
-    {#if typeMemory === "Long-Term Memory" && memoryItems !== "Words" && memoryItems !== "Colors" && isInitialized}
+    {#if typeMemory === "Long-Term Memory" && memoryItems !== "Words" && memoryItems !== "Colors" && memoryItems !== "Shapes" && isInitialized}
       <div class="switch-container">
         <p class="width">
           {memoryItems === "Numbers" ? "Number" : "String"} Length:
@@ -115,8 +117,10 @@
             localStorage.setItem("stringLength", "1");
           }
           if (typeMemory === "Long-Term Memory") {
-            if (memoryItems != "Colors") navigate("/home/long-term");
-            else navigate("/home/colors");
+            if (memoryItems != "Colors" && memoryItems != "Shapes")
+              navigate("/home/long-term");
+            else if (memoryItems === "Colors") navigate("/home/colors");
+            else navigate("/home/shapes");
           } else if (typeMemory === "Short-Term Memory") {
             navigate("/home/short-term");
           } else {

@@ -83,7 +83,8 @@
       usedShapes.push(shapesVariants[shapeInd]);
     }
 
-    shapes = usedShapes;
+    shapes = ["Triangle", "Diamonds", "Square", "Circle"];
+    //usedShapes;
   }
 
   function delay(ms: number) {
@@ -160,9 +161,9 @@
     <div class="render" style:color={isError === 1 ? errColor : rightColor}>
       {#if whoIsShown === "pairs"}
         {#if shownShape === "Circle"}
-          <Circle size={ShapeSize} />
+          <Circle size="56px" />
         {:else if shownShape === "Square"}
-          <Square size={ShapeSize} />
+          <Square size="56px" />
         {:else if shownShape === "Diamonds"}
           <Diamonds size={ShapeSize} />
         {:else if shownShape === "Pentagon"}

@@ -83,8 +83,7 @@
       usedShapes.push(shapesVariants[shapeInd]);
     }
 
-    shapes = ["Triangle", "Diamonds", "Square", "Circle"];
-    //usedShapes;
+    shapes = usedShapes;
   }
 
   function delay(ms: number) {

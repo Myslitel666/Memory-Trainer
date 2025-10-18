@@ -118,6 +118,7 @@
         colorInd = Math.floor(Math.random() * colorVariants.length);
         const lastTwoColors = usedShapes.slice(-2).map((item) => item.color);
         const lastTwoShapes = usedShapes.slice(-2).map((item) => item.shape);
+        console.log(colorVariants[colorInd]);
         if (
           !lastTwoColors.includes(colorVariants[colorInd]) &&
           !lastTwoShapes.includes(shapesVariants[shapeInd])
@@ -251,7 +252,7 @@
         {:else if shownShape.shape === "Heart"}
           <Heart size={ShapeSize} fill={shownShape.color} />
         {:else if shownShape.shape === "Dodecahedron"}
-          <Dodecahedron size={ShapeSize} />
+          <Dodecahedron size={ShapeSize} fill={shownShape.color} />
         {:else if shownShape.shape === "Cube"}
           <Cube size={ShapeSize} fill={shownShape.color} />
         {:else if shownShape.shape === "Cylinder"}
@@ -259,7 +260,7 @@
         {:else if shownShape.shape === "Cone"}
           <Cone size={ShapeSize} fill={shownShape.color} />
         {:else}
-          <Hexahedron size={ShapeSize} />
+          <Hexahedron size={ShapeSize} fill={shownShape.color} />
         {/if}
       {:else if whoIsShown === "message"}
         {message}

@@ -118,10 +118,17 @@
             localStorage.setItem("stringLength", "1");
           }
           if (typeMemory === "Long-Term Memory") {
-            if (memoryItems != "Colors" && memoryItems != "Shapes")
+            if (
+              memoryItems != "Colors" &&
+              memoryItems != "Shapes" &&
+              memoryItems != "Colored Shapes"
+            )
               navigate("/home/long-term");
-            else if (memoryItems === "Colors") navigate("/home/colors");
-            else navigate("/home/shapes");
+            else if (memoryItems === "Colors")
+              navigate("/home/long-term/colors");
+            else if (memoryItems === "Shapes")
+              navigate("/home/long-term/shapes");
+            else navigate("/home/long-term/colored-shapes");
           } else if (typeMemory === "Short-Term Memory") {
             navigate("/home/short-term");
           } else {

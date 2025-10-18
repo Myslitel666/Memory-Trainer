@@ -26,6 +26,7 @@
   let message = "Remember";
   let count = 3;
   let coloredShapes: { shape: string; color: string }[] = [];
+  let isColorSelection = false;
 
   const shapesVariants = [
     "Circle",
@@ -73,9 +74,17 @@
           "#f7ee2d",
         ];
 
-  const ShapeSize = "66px";
+  const buttonLines = [
+    [[], [], []],
+    [[], [], []],
+    [[], [], []],
+    [[], [], []],
+  ];
+
+  const ShapeSize = "80px";
   let checkShapeIndex = 0;
   let inputShape = "";
+  let inputColor = "";
   let isError = 0;
   let rightColor = "";
   let errColor = "";
@@ -177,9 +186,26 @@
   function onShapeClick(shClick: string) {
     if (whoIsShown === "input") {
       inputShape = shClick;
+    }
+  }
 
-      if (inputShape === coloredShapes[checkShapeIndex].shape) {
-        if (checkShapeIndex < coloredShapes.length) {
+  function onColorClick(event: MouseEvent, row: number, col: number) {
+    if (whoIsShown === "input") {
+      let selectedIndex = 3 * row + col;
+      inputColor = colorVariants[selectedIndex];
+    }
+  }
+
+  function toggleToNestShape() {
+    isColorSelection = !isColorSelection;
+    inputColor = "";
+    inputShape = "";
+  }
+
+  function onNextClick() {
+    if (whoIsShown === "input") {
+      if (isColorSelection) {
+        if (inputColor === coloredShapes[checkShapeIndex].color) {
           if (checkShapeIndex === coloredShapes.length - 1) {
             if (count > record) record = count;
             count++;
@@ -187,11 +213,20 @@
           } else {
             checkShapeIndex = checkShapeIndex + 1;
           }
+        } else {
+          isError = 1;
+          if (count > 1) count--;
+          startMemoryTraining();
         }
+        toggleToNestShape();
       } else {
-        isError = 1;
-        if (count > 1) count--;
-        startMemoryTraining();
+        if (inputShape === coloredShapes[checkShapeIndex].shape) {
+          isColorSelection = !isColorSelection;
+        } else {
+          isError = 1;
+          if (count > 1) count--;
+          startMemoryTraining();
+        }
       }
     }
   }
@@ -230,32 +265,65 @@
         {message}
       {:else if inputShape}
         {#if inputShape === "Circle"}
-          <Circle fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Circle
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Square"}
-          <Square fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Square
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Diamonds"}
-          <Diamonds fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Diamonds
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Pentagon"}
-          <Pentagon fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Pentagon
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Triangle"}
-          <Triangle fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Triangle
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Hexagon"}
-          <Hexagon fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Hexagon
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Heart"}
-          <Heart fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Heart
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Dodecahedron"}
           <Dodecahedron
-            fill={$themeStore.icon.color.primary}
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
             size={ShapeSize}
           />
         {:else if inputShape === "Cube"}
-          <Cube fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Cube
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Cylinder"}
-          <Cylinder fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Cylinder
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Cone"}
-          <Cone fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Cone
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else}
-          <Hexahedron fill={$themeStore.icon.color.primary} size={ShapeSize} />
+          <Hexahedron
+            fill={inputColor ? inputColor : $themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {/if}
       {:else}
         <div class="text-box" style:color={rightColor}>?</div>
@@ -263,135 +331,170 @@
     </div>
     <div class="mgn-top">
       <div style:display="flex" style:flex-direction="column">
-        <div style:display="flex" style:flex-direction="row" style:gap="11px">
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Circle");
-            }}
-          >
-            <Circle fill={$themeStore.icon.color.primary} size="45px" />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Triangle");
-            }}
-          >
-            <Triangle fill={$themeStore.icon.color.primary} size="49px" />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Square");
-            }}
-          >
-            <Square fill={$themeStore.icon.color.primary} size="42px" />
-          </ButtonBox>
-        </div>
-        <div style:display="flex" style:flex-direction="row" style:gap="11px">
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Diamonds");
-            }}
-          >
-            <Diamonds fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Pentagon");
-            }}
-          >
-            <Pentagon fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Hexagon");
-            }}
-          >
-            <Hexagon fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-        </div>
-        <div style:display="flex" style:flex-direction="row" style:gap="11px">
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Heart");
-            }}
-          >
-            <Heart fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Dodecahedron");
-            }}
-          >
-            <Dodecahedron fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Cube");
-            }}
-          >
-            <Cube fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-        </div>
-        <div style:display="flex" style:flex-direction="row" style:gap="11px">
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Cylinder");
-            }}
-          >
-            <Cylinder fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Cone");
-            }}
-          >
-            <Cone fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-          <ButtonBox
-            filter={$themeMode === "light" ? "" : "brightness(0.7)"}
-            marginBottom="11px"
-            onClick={(event: MouseEvent) => {
-              onShapeClick("Hexahedron");
-            }}
-          >
-            <Hexahedron fill={$themeStore.icon.color.primary} />
-          </ButtonBox>
-        </div>
+        {#if isColorSelection}
+          <div style:display="flex" style:flex-direction="column">
+            {#each buttonLines as buttonLine, i}
+              <div
+                style:display="flex"
+                style:flex-direction="row"
+                style:gap="11px"
+              >
+                {#each buttonLine as button, j}
+                  <ButtonBox
+                    filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+                    bgColor={colorVariants[3 * i + j]}
+                    marginBottom="11px"
+                    isPrimary
+                    onClick={(event: MouseEvent) => {
+                      onColorClick(event, i, j);
+                    }}
+                  ></ButtonBox>
+                {/each}
+              </div>
+            {/each}
+          </div>
+        {:else}
+          <div style:display="flex" style:flex-direction="row" style:gap="11px">
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Circle");
+              }}
+            >
+              <Circle fill={$themeStore.icon.color.primary} size="45px" />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Triangle");
+              }}
+            >
+              <Triangle fill={$themeStore.icon.color.primary} size="49px" />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Square");
+              }}
+            >
+              <Square fill={$themeStore.icon.color.primary} size="42px" />
+            </ButtonBox>
+          </div>
+          <div style:display="flex" style:flex-direction="row" style:gap="11px">
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Diamonds");
+              }}
+            >
+              <Diamonds fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Pentagon");
+              }}
+            >
+              <Pentagon fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Hexagon");
+              }}
+            >
+              <Hexagon fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+          </div>
+          <div style:display="flex" style:flex-direction="row" style:gap="11px">
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Heart");
+              }}
+            >
+              <Heart fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Dodecahedron");
+              }}
+            >
+              <Dodecahedron fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Cube");
+              }}
+            >
+              <Cube fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+          </div>
+          <div style:display="flex" style:flex-direction="row" style:gap="11px">
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Cylinder");
+              }}
+            >
+              <Cylinder fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Cone");
+              }}
+            >
+              <Cone fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+            <ButtonBox
+              filter={$themeMode === "light" ? "" : "brightness(0.7)"}
+              marginBottom="11px"
+              onClick={(event: MouseEvent) => {
+                onShapeClick("Hexahedron");
+              }}
+            >
+              <Hexahedron fill={$themeStore.icon.color.primary} />
+            </ButtonBox>
+          </div>
+        {/if}
       </div>
     </div>
     <div class="score">
       <div style:display="flex" style:gap="7px">
         <Button
+          disabled={isColorSelection ? false : true}
+          height="40px"
+          width="150px"
+          isPrimary={false}
+          onClick={() => {
+            isColorSelection = !isColorSelection;
+            inputColor = "";
+          }}
+        >
+          Back
+        </Button>
+        <Button
           disabled={inputShape ? false : true}
           height="40px"
           width="150px"
-          isPrimary={false}>Back</Button
+          onClick={onNextClick}
         >
-        <Button disabled={inputShape ? false : true} height="40px" width="150px"
-          >Next</Button
-        >
+          Next
+        </Button>
       </div>
       <div style:margin-top="4px">
         <div class="mgn-top">

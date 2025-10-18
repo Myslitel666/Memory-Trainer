@@ -475,28 +475,14 @@
       </div>
     </div>
     <div class="score">
-      <div style:display="flex" style:gap="7px">
-        <Button
-          disabled={isColorSelection ? false : true}
-          height="40px"
-          width="150px"
-          isPrimary={false}
-          onClick={() => {
-            isColorSelection = !isColorSelection;
-            inputColor = "";
-          }}
-        >
-          Back
-        </Button>
-        <Button
-          disabled={inputShape ? false : true}
-          height="40px"
-          width="150px"
-          onClick={onNextClick}
-        >
-          Next
-        </Button>
-      </div>
+      <Button
+        disabled={inputShape ? false : true}
+        height="40px"
+        width="308px"
+        onClick={onNextClick}
+      >
+        Next
+      </Button>
       <div style:margin-top="4px">
         <div class="mgn-top">
           <span class="mgn-top">

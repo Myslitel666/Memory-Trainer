@@ -1,7 +1,7 @@
 <script lang="ts">
   import { themeStore, themeMode } from "svelte-elegant/stores";
   import { onMount } from "svelte";
-  import { ButtonBox, Box } from "svelte-elegant";
+  import { ButtonBox, Box, Button } from "svelte-elegant";
 
   import {
     Circle,
@@ -230,29 +230,32 @@
         {message}
       {:else if inputShape}
         {#if inputShape === "Circle"}
-          <Circle size={ShapeSize} />
+          <Circle fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Square"}
-          <Square size={ShapeSize} />
+          <Square fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Diamonds"}
-          <Diamonds size={ShapeSize} />
+          <Diamonds fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Pentagon"}
-          <Pentagon size={ShapeSize} />
+          <Pentagon fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Triangle"}
-          <Triangle size={ShapeSize} />
+          <Triangle fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Hexagon"}
-          <Hexagon size={ShapeSize} />
+          <Hexagon fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Heart"}
-          <Heart size={ShapeSize} />
+          <Heart fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Dodecahedron"}
-          <Dodecahedron size={ShapeSize} />
+          <Dodecahedron
+            fill={$themeStore.icon.color.primary}
+            size={ShapeSize}
+          />
         {:else if inputShape === "Cube"}
-          <Cube size={ShapeSize} />
+          <Cube fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Cylinder"}
-          <Cylinder size={ShapeSize} />
+          <Cylinder fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else if inputShape === "Cone"}
-          <Cone size={ShapeSize} />
+          <Cone fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {:else}
-          <Hexahedron size={ShapeSize} />
+          <Hexahedron fill={$themeStore.icon.color.primary} size={ShapeSize} />
         {/if}
       {:else}
         <div class="text-box" style:color={rightColor}>?</div>
@@ -268,7 +271,7 @@
               onShapeClick("Circle");
             }}
           >
-            <Circle size="45px" />
+            <Circle fill={$themeStore.icon.color.primary} size="45px" />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -277,7 +280,7 @@
               onShapeClick("Triangle");
             }}
           >
-            <Triangle size="49px" />
+            <Triangle fill={$themeStore.icon.color.primary} size="49px" />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -286,7 +289,7 @@
               onShapeClick("Square");
             }}
           >
-            <Square size="42px" />
+            <Square fill={$themeStore.icon.color.primary} size="42px" />
           </ButtonBox>
         </div>
         <div style:display="flex" style:flex-direction="row" style:gap="11px">
@@ -297,7 +300,7 @@
               onShapeClick("Diamonds");
             }}
           >
-            <Diamonds />
+            <Diamonds fill={$themeStore.icon.color.primary} />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -306,7 +309,7 @@
               onShapeClick("Pentagon");
             }}
           >
-            <Pentagon />
+            <Pentagon fill={$themeStore.icon.color.primary} />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -315,7 +318,7 @@
               onShapeClick("Hexagon");
             }}
           >
-            <Hexagon />
+            <Hexagon fill={$themeStore.icon.color.primary} />
           </ButtonBox>
         </div>
         <div style:display="flex" style:flex-direction="row" style:gap="11px">
@@ -326,7 +329,7 @@
               onShapeClick("Heart");
             }}
           >
-            <Heart />
+            <Heart fill={$themeStore.icon.color.primary} />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -335,7 +338,7 @@
               onShapeClick("Dodecahedron");
             }}
           >
-            <Dodecahedron />
+            <Dodecahedron fill={$themeStore.icon.color.primary} />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -344,7 +347,7 @@
               onShapeClick("Cube");
             }}
           >
-            <Cube />
+            <Cube fill={$themeStore.icon.color.primary} />
           </ButtonBox>
         </div>
         <div style:display="flex" style:flex-direction="row" style:gap="11px">
@@ -355,7 +358,7 @@
               onShapeClick("Cylinder");
             }}
           >
-            <Cylinder />
+            <Cylinder fill={$themeStore.icon.color.primary} />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -364,7 +367,7 @@
               onShapeClick("Cone");
             }}
           >
-            <Cone />
+            <Cone fill={$themeStore.icon.color.primary} />
           </ButtonBox>
           <ButtonBox
             filter={$themeMode === "light" ? "" : "brightness(0.7)"}
@@ -373,20 +376,30 @@
               onShapeClick("Hexahedron");
             }}
           >
-            <Hexahedron />
+            <Hexahedron fill={$themeStore.icon.color.primary} />
           </ButtonBox>
         </div>
       </div>
     </div>
-    <div class="mgn-top">
-      <span>
-        Count: <span style:color={theme.palette.primary}>{count}</span>
-      </span>
-    </div>
-    <div class="mgn-top">
-      <span>
-        Your Record: <span style:color={theme.palette.primary}>{record}</span>
-      </span>
+    <div class="score">
+      <div style:display="flex" style:gap="7px">
+        <Button height="40px" width="150px" isPrimary={false}>Back</Button>
+        <Button height="40px" width="150px">Next</Button>
+      </div>
+      <div style:margin-top="4px">
+        <div class="mgn-top">
+          <span class="mgn-top">
+            Count: <span style:color={theme.palette.primary}>{count}</span>
+          </span>
+        </div>
+        <div class="mgn-top">
+          <span class="mgn-top">
+            Your Record: <span style:color={theme.palette.primary}
+              >{record}</span
+            >
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 {:else}
@@ -394,6 +407,10 @@
 {/if}
 
 <style>
+  .score {
+    text-align: center;
+  }
+
   .color-box {
     width: 93px;
     height: 93px;

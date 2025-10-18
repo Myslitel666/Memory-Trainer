@@ -238,9 +238,9 @@
     <div class="render" style:color={isError === 1 ? errColor : rightColor}>
       {#if whoIsShown === "pairs"}
         {#if shownShape.shape === "Circle"}
-          <Circle size="56px" fill={shownShape.color} />
+          <Circle size="70px" fill={shownShape.color} />
         {:else if shownShape.shape === "Square"}
-          <Square size="56px" fill={shownShape.color} />
+          <Square size="70px" fill={shownShape.color} />
         {:else if shownShape.shape === "Diamonds"}
           <Diamonds size={ShapeSize} fill={shownShape.color} />
         {:else if shownShape.shape === "Pentagon"}

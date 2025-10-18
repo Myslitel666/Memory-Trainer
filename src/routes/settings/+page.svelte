@@ -7,8 +7,9 @@
   let memoryItems = "";
   let typeMemory = "";
   let length = "3";
+  const longTermItems = ["Words", "Colors", "Shapes", "Colored Shapes"];
 
-  const shortTermMemoryItems = ["Numbers", "Numbers and Letters"];
+  const shortTermItems = ["Numbers", "Numbers and Letters"];
 
   let isInitialized = false;
 
@@ -19,7 +20,7 @@
         memoryItems === "Colors" ||
         memoryItems === "Shapes")
     ) {
-      memoryItems = shortTermMemoryItems[0];
+      memoryItems = shortTermItems[0];
     }
   }
 
@@ -60,8 +61,8 @@
             label="Memory Items"
             bind:value={memoryItems}
             options={typeMemory === "Long-Term Memory"
-              ? ["Numbers", "Numbers and Letters", "Words", "Colors", "Shapes"]
-              : shortTermMemoryItems}
+              ? [...shortTermItems, ...longTermItems]
+              : shortTermItems}
           />
         </div>
       </div>
@@ -77,7 +78,7 @@
         />
       </div>
     </div>
-    {#if typeMemory === "Long-Term Memory" && memoryItems !== "Words" && memoryItems !== "Colors" && memoryItems !== "Shapes" && isInitialized}
+    {#if typeMemory === "Long-Term Memory" && !longTermItems.includes(memoryItems) && isInitialized}
       <div class="switch-container">
         <p class="width">
           {memoryItems === "Numbers" ? "Number" : "String"} Length:

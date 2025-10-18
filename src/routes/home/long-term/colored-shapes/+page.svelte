@@ -24,9 +24,8 @@
   const pairDelay = 1750;
   let shownShape = "";
   let message = "Remember";
-  const maxCharCount = 2;
   let count = 3;
-  let shapes: string[] = [];
+  let coloredShapes: { shape: string; color: string }[] = [];
 
   const shapesVariants = [
     "Circle",
@@ -42,6 +41,37 @@
     "Cone",
     "Hexahedron",
   ];
+
+  $: colorVariants =
+    $themeMode === "light"
+      ? [
+          "#f84242",
+          "#f753ef",
+          "#8645f5",
+          "#7cdeff",
+          "#4c8dff",
+          "#3030b7",
+          "#00ffad",
+          "#4ce332",
+          "#96c615",
+          "#f18d14",
+          "#f7c32c",
+          "#f7ee2d",
+        ]
+      : [
+          "#f62626",
+          "#ff33ec",
+          "#9100ff",
+          "#7cdeff",
+          "#03a6ff",
+          "#0033f0",
+          "#00ffad",
+          "#4ce332",
+          "#96c615",
+          "#f18d14",
+          "#f7c32c",
+          "#f7ee2d",
+        ];
 
   const ShapeSize = "66px";
   let checkShapeIndex = 0;
@@ -67,23 +97,29 @@
   });
 
   async function genShapes() {
-    let usedShapes: string[] = [];
+    let usedShapes: { shape: string; color: string }[] = [];
     let shapeInd = 0;
+    let colorInd = 0;
 
     for (let i = 0; i < count; i++) {
       let isShapeNotUnique = true;
 
       while (isShapeNotUnique) {
         shapeInd = Math.floor(Math.random() * shapesVariants.length);
-        const lastTwo = usedShapes.slice(-2);
-        if (!lastTwo.includes(shapesVariants[shapeInd]))
+        colorInd = Math.floor(Math.random() * colorVariants.length);
+        const lastTwoColors = usedShapes.slice(-2).map((item) => item.color);
+        const lastTwoShapes = usedShapes.slice(-2).map((item) => item.shape);
+        if (
+          !lastTwoColors.includes(colorVariants[colorInd]) &&
+          !lastTwoShapes.includes(shapesVariants[shapeInd])
+        )
           isShapeNotUnique = false; //Хотя бы последние 2 фигуры должны быть уникальны
       }
 
-      usedShapes.push(shapesVariants[shapeInd]);
+      usedShapes.push({ shape: shapesVariants[shapeInd], color: "red" });
     }
 
-    shapes = usedShapes;
+    coloredShapes = usedShapes;
   }
 
   function delay(ms: number) {
@@ -93,8 +129,8 @@
   async function showShape() {
     whoIsShown = "pairs";
 
-    for (let i = 0; i < shapes.length; i++) {
-      shownShape = shapes[i];
+    for (let i = 0; i < coloredShapes.length; i++) {
+      shownShape = coloredShapes[i].shape;
       await delay(pairDelay);
     }
   }
@@ -136,9 +172,9 @@
     if (whoIsShown === "input") {
       inputShape = shClick;
 
-      if (inputShape === shapes[checkShapeIndex]) {
-        if (checkShapeIndex < shapes.length) {
-          if (checkShapeIndex === shapes.length - 1) {
+      if (inputShape === coloredShapes[checkShapeIndex].shape) {
+        if (checkShapeIndex < coloredShapes.length) {
+          if (checkShapeIndex === coloredShapes.length - 1) {
             if (count > record) record = count;
             count++;
             startMemoryTraining();

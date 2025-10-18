@@ -383,8 +383,15 @@
     </div>
     <div class="score">
       <div style:display="flex" style:gap="7px">
-        <Button height="40px" width="150px" isPrimary={false}>Back</Button>
-        <Button height="40px" width="150px">Next</Button>
+        <Button
+          disabled={inputShape ? false : true}
+          height="40px"
+          width="150px"
+          isPrimary={false}>Back</Button
+        >
+        <Button disabled={inputShape ? false : true} height="40px" width="150px"
+          >Next</Button
+        >
       </div>
       <div style:margin-top="4px">
         <div class="mgn-top">

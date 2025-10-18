@@ -22,7 +22,7 @@
   let whoIsShown: "message" | "pairs" | "input" = "message";
   const messageDelay = 1550;
   const pairDelay = 1750;
-  let shownShape = "";
+  let shownShape = { shape: "", color: "" };
   let message = "Remember";
   let count = 3;
   let coloredShapes: { shape: string; color: string }[] = [];
@@ -116,7 +116,10 @@
           isShapeNotUnique = false; //Хотя бы последние 2 фигуры должны быть уникальны
       }
 
-      usedShapes.push({ shape: shapesVariants[shapeInd], color: "red" });
+      usedShapes.push({
+        shape: shapesVariants[shapeInd],
+        color: colorVariants[colorInd],
+      });
     }
 
     coloredShapes = usedShapes;
@@ -130,7 +133,10 @@
     whoIsShown = "pairs";
 
     for (let i = 0; i < coloredShapes.length; i++) {
-      shownShape = coloredShapes[i].shape;
+      shownShape = {
+        shape: coloredShapes[i].shape,
+        color: coloredShapes[i].color,
+      };
       await delay(pairDelay);
     }
   }
@@ -195,28 +201,28 @@
   <div class="content">
     <div class="render" style:color={isError === 1 ? errColor : rightColor}>
       {#if whoIsShown === "pairs"}
-        {#if shownShape === "Circle"}
-          <Circle size="56px" />
-        {:else if shownShape === "Square"}
-          <Square size="56px" />
-        {:else if shownShape === "Diamonds"}
-          <Diamonds size={ShapeSize} />
-        {:else if shownShape === "Pentagon"}
-          <Pentagon size={ShapeSize} />
-        {:else if shownShape === "Triangle"}
-          <Triangle size={ShapeSize} />
-        {:else if shownShape === "Hexagon"}
-          <Hexagon size={ShapeSize} />
-        {:else if shownShape === "Heart"}
-          <Heart size={ShapeSize} />
-        {:else if shownShape === "Dodecahedron"}
+        {#if shownShape.shape === "Circle"}
+          <Circle size="56px" fill={shownShape.color} />
+        {:else if shownShape.shape === "Square"}
+          <Square size="56px" fill={shownShape.color} />
+        {:else if shownShape.shape === "Diamonds"}
+          <Diamonds size={ShapeSize} fill={shownShape.color} />
+        {:else if shownShape.shape === "Pentagon"}
+          <Pentagon size={ShapeSize} fill={shownShape.color} />
+        {:else if shownShape.shape === "Triangle"}
+          <Triangle size={ShapeSize} fill={shownShape.color} />
+        {:else if shownShape.shape === "Hexagon"}
+          <Hexagon size={ShapeSize} fill={shownShape.color} />
+        {:else if shownShape.shape === "Heart"}
+          <Heart size={ShapeSize} fill={shownShape.color} />
+        {:else if shownShape.shape === "Dodecahedron"}
           <Dodecahedron size={ShapeSize} />
-        {:else if shownShape === "Cube"}
-          <Cube size={ShapeSize} />
-        {:else if shownShape === "Cylinder"}
-          <Cylinder size={ShapeSize} />
-        {:else if shownShape === "Cone"}
-          <Cone size={ShapeSize} />
+        {:else if shownShape.shape === "Cube"}
+          <Cube size={ShapeSize} fill={shownShape.color} />
+        {:else if shownShape.shape === "Cylinder"}
+          <Cylinder size={ShapeSize} fill={shownShape.color} />
+        {:else if shownShape.shape === "Cone"}
+          <Cone size={ShapeSize} fill={shownShape.color} />
         {:else}
           <Hexahedron size={ShapeSize} />
         {/if}

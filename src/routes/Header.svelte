@@ -37,21 +37,24 @@
       </span>
     </p>
   </button>
-  <div class="buttons">
-    <span style:margin-top="7px">
-      <DiagramIconPro size="56px" />
-    </span>
+  <div class="icons">
+    <button style:margin-top="4px" onclick={() => goto("/data")}>
+      <DiagramIconPro size="49px" />
+    </button>
     <ColorThemeSwitch />
   </div>
 </Header>
 
 <style>
-  .buttons {
+  button {
+    margin-left: 6px;
+  }
+
+  .icons {
     display: flex;
-    margin-left: auto;
-    gap: 5px;
-    justify-content: center;
     align-items: center;
-    margin-right: 5px;
+    gap: 6px;
+    margin-left: auto;
+    margin-right: 6px;
   }
 </style>

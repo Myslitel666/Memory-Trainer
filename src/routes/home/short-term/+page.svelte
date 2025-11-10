@@ -18,6 +18,7 @@
   let textRender = "";
   let isHidden = false;
   let symbols = "QWERTYUIOPASDFGHJKLZXCVBNM";
+  let analytic: number[] = [];
 
   let buttons = [
     [1, 2, 3],
@@ -54,6 +55,41 @@
     }
     toVsbl();
     inputStr = "";
+  }
+
+  function saveAnalytic() {
+    if (analytic.length === 0) {
+      analytic.push(3);
+    }
+
+    analytic.push(cntChr);
+
+    if (analytic.length > 2) {
+      const current = analytic.length - 1;
+      const previous = analytic.length - 2;
+      const previously = analytic.length - 3;
+      if (memoryItems === "Numbers") {
+        // Прочитать массив из localStorage
+        let sTNumbers = JSON.parse(localStorage.getItem("sTNumbers") || "[]");
+
+        if (
+          analytic[previous] < analytic[previously] &&
+          analytic[current] > analytic[previous]
+        ) {
+          // Добавить переменную current в массив
+          sTNumbers.push(analytic[previous]);
+        } else if (
+          analytic[previous] > analytic[previously] &&
+          analytic[current] < analytic[previous]
+        ) {
+          // Добавить переменную current в массив
+          sTNumbers.push(analytic[current]);
+        }
+
+        // Записать обратно в localStorage
+        localStorage.setItem("sTNumbers", JSON.stringify(sTNumbers));
+      }
+    }
   }
 
   function genNumb() {
@@ -140,6 +176,7 @@
   function onEnterClick() {
     checkResult();
     isHidden = false;
+    saveAnalytic();
   }
 </script>
 

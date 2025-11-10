@@ -1,8 +1,39 @@
 <script>
   import { Box, Button, AutoComplete } from "svelte-elegant";
   import { Process, Info, DiagramIconPro } from "svelte-elegant/icons-elegant";
+  import { onMount } from "svelte";
 
-  let metric = "Max Power";
+  let metric = "Average";
+  let memoryType = "Short Term";
+  let memoryItems = "Numbers";
+  let average = 0;
+
+  function getMetric() {
+    if (memoryType === "Short Term" && memoryItems === "Numbers") {
+      const sTNumbers = JSON.parse(localStorage.getItem("sTNumbers") || "[]");
+
+      let sum = 0;
+      for (let i = 0; i < sTNumbers.length; i++) {
+        sum += sTNumbers[i];
+      }
+      average = sTNumbers.length === 0 ? 0 : sum / sTNumbers.length;
+      average = Number(average.toFixed(2));
+    }
+  }
+
+  function resetMetric() {
+    if (memoryType === "Short Term" && memoryItems === "Numbers") {
+      localStorage.setItem("sTNumbers", JSON.stringify([]));
+    }
+  }
+
+  onMount(() => {
+    getMetric();
+  });
+
+  $: if (metric || memoryType || memoryItems) {
+    getMetric();
+  }
 </script>
 
 <div class="page">
@@ -26,7 +57,7 @@
         <Box variant="Hoverable" maxWidth="500px" width="calc(100vw - 30px)">
           <div class="box">
             <p style:font-size="20px">Average</p>
-            <p class="score">12.45</p>
+            <p class="score">{average}</p>
             <div class="info-icon">
               <div class="info-icon-container">
                 <Info />
@@ -64,9 +95,9 @@
         <div class="time-autocomplete">
           <AutoComplete
             isSelect
-            label="Mode"
+            bind:value={memoryType}
+            label="Memory Type"
             width="100%"
-            value="Short-Term"
             options={["Short Term", "Long Term", "Assosiative"]}
           />
         </div>
@@ -77,11 +108,11 @@
         style:align-items="center"
         style:gap="5px"
       >
-        <p>Mode:</p>
+        <p>Items:</p>
         <AutoComplete
-          label="Mode"
+          label="Items"
+          bind:value={memoryItems}
           width="100%"
-          value="Numbers"
           options={[
             "Numbers",
             "Numbers and Letters",
@@ -101,6 +132,10 @@
       bgColorHover="rgb(255,0,0,0.12)"
       color="#ec1313"
       borderColor="#ec1313"
+      onClick={() => {
+        resetMetric();
+        getMetric();
+      }}
     >
       <div style:margin-top="5px" style:margin-left="-2px">
         <Process fill="#ec1313" size="35px" />

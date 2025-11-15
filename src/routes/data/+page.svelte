@@ -8,6 +8,7 @@
   let memoryType = "Short Term";
   let memoryItems = "Numbers";
   let average = 0;
+  let isInitialized = false;
 
   function getMetric() {
     if (!browser) return; // ← Не выполнять на сервере
@@ -31,6 +32,7 @@
 
   onMount(() => {
     getMetric();
+    isInitialized = true;
   });
 
   $: if (metric && memoryType && memoryItems) {
@@ -38,115 +40,118 @@
   }
 </script>
 
-<div class="page">
-  <div class="box">
-    <p class="header">Analytical Data</p>
-    <p>
-      Your progress is saved automatically in your browser. Only you can see it.
-    </p>
-    <div class="box-list">
-      {#if metric === "Max Power"}
-        <Box variant="Hoverable" maxWidth="500px" width="calc(100vw - 30px)">
-          <div class="box">
-            <p style:font-size="20px">Max Power</p>
-            <p class="score">20.35</p>
-            <div class="info-icon">
-              <Info />
-            </div>
-          </div>
-        </Box>
-      {:else}
-        <Box variant="Hoverable" maxWidth="500px" width="calc(100vw - 30px)">
-          <div class="box">
-            <p style:font-size="20px">Average</p>
-            <p class="score">{average}</p>
-            <div class="info-icon">
-              <div class="info-icon-container">
+{#if isInitialized}
+  <div class="page">
+    <div class="box">
+      <p class="header">Analytical Data</p>
+      <p>
+        Your progress is saved automatically in your browser. Only you can see
+        it.
+      </p>
+      <div class="box-list">
+        {#if metric === "Max Power"}
+          <Box variant="Hoverable" maxWidth="500px" width="calc(100vw - 30px)">
+            <div class="box">
+              <p style:font-size="20px">Max Power</p>
+              <p class="score">20.35</p>
+              <div class="info-icon">
                 <Info />
               </div>
             </div>
-          </div>
-        </Box>
-      {/if}
-    </div>
-    <p class="header" style:margin-top="30px">Configure Analytics</p>
-    <div
-      style:display="flex"
-      style:align-items="center"
-      style:margin-top="5px"
-      style:gap="5px"
-    >
-      <p>Metric:</p>
-      <div class="metric-autocomplete">
-        <AutoComplete
-          label="Metric"
-          width="100%"
-          bind:value={metric}
-          options={["Max Power", "Average"]}
-        />
+          </Box>
+        {:else}
+          <Box variant="Hoverable" maxWidth="500px" width="calc(100vw - 30px)">
+            <div class="box">
+              <p style:font-size="20px">Average</p>
+              <p class="score">{average}</p>
+              <div class="info-icon">
+                <div class="info-icon-container">
+                  <Info />
+                </div>
+              </div>
+            </div>
+          </Box>
+        {/if}
       </div>
-    </div>
-    <div
-      style:display="flex"
-      style:gap="10px"
-      style:margin-top="7px"
-      style:margin-left="9px"
-    >
-      <div style:display="flex" style:align-items="center" style:gap="5px">
-        <p style:margin-left="-9px" style:margin-right="9px">Type:</p>
-        <div class="time-autocomplete">
+      <p class="header" style:margin-top="30px">Configure Analytics</p>
+      <div
+        style:display="flex"
+        style:align-items="center"
+        style:margin-top="5px"
+        style:gap="5px"
+      >
+        <p>Metric:</p>
+        <div class="metric-autocomplete">
           <AutoComplete
-            isSelect
-            bind:value={memoryType}
-            label="Memory Type"
+            label="Metric"
             width="100%"
-            options={["Short Term", "Long Term", "Assosiative"]}
+            bind:value={metric}
+            options={["Max Power", "Average"]}
           />
         </div>
       </div>
       <div
-        class="level-autocomplete"
         style:display="flex"
-        style:align-items="center"
-        style:gap="5px"
+        style:gap="10px"
+        style:margin-top="7px"
+        style:margin-left="9px"
       >
-        <p>Items:</p>
-        <AutoComplete
-          label="Items"
-          bind:value={memoryItems}
-          width="100%"
-          options={[
-            "Numbers",
-            "Numbers and Letters",
-            "Words",
-            "Colors",
-            "Shapes",
-            "Colored Shapes",
-          ]}
-        />
+        <div style:display="flex" style:align-items="center" style:gap="5px">
+          <p style:margin-left="-9px" style:margin-right="9px">Type:</p>
+          <div class="time-autocomplete">
+            <AutoComplete
+              isSelect
+              bind:value={memoryType}
+              label="Memory Type"
+              width="100%"
+              options={["Short Term", "Long Term", "Assosiative"]}
+            />
+          </div>
+        </div>
+        <div
+          class="level-autocomplete"
+          style:display="flex"
+          style:align-items="center"
+          style:gap="5px"
+        >
+          <p>Items:</p>
+          <AutoComplete
+            label="Items"
+            bind:value={memoryItems}
+            width="100%"
+            options={[
+              "Numbers",
+              "Numbers and Letters",
+              "Words",
+              "Colors",
+              "Shapes",
+              "Colored Shapes",
+            ]}
+          />
+        </div>
       </div>
+      <Button
+        variant="Text"
+        padding="7px"
+        height="40px"
+        marginTop="5px"
+        bgColorHover="rgb(255,0,0,0.12)"
+        color="#ec1313"
+        borderColor="#ec1313"
+        onClick={() => {
+          resetMetric();
+          getMetric();
+        }}
+      >
+        <div style:margin-top="5px" style:margin-left="-2px">
+          <Process fill="#ec1313" size="35px" />
+        </div>
+        Reset Current Data
+      </Button>
+      <DiagramIconPro strokeWidth="0.03" size="200px" />
     </div>
-    <Button
-      variant="Text"
-      padding="7px"
-      height="40px"
-      marginTop="5px"
-      bgColorHover="rgb(255,0,0,0.12)"
-      color="#ec1313"
-      borderColor="#ec1313"
-      onClick={() => {
-        resetMetric();
-        getMetric();
-      }}
-    >
-      <div style:margin-top="5px" style:margin-left="-2px">
-        <Process fill="#ec1313" size="35px" />
-      </div>
-      Reset Current Data
-    </Button>
-    <DiagramIconPro strokeWidth="0.03" size="200px" />
   </div>
-</div>
+{/if}
 
 <style>
   .metric-autocomplete {

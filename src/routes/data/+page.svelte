@@ -2,6 +2,7 @@
   import { Box, Button, AutoComplete } from "svelte-elegant";
   import { Process, Info, DiagramIconPro } from "svelte-elegant/icons-elegant";
   import { onMount } from "svelte";
+  import { browser } from "$app/environment";
 
   let metric = "Average";
   let memoryType = "Short Term";
@@ -9,9 +10,10 @@
   let average = 0;
 
   function getMetric() {
+    if (!browser) return; // ← Не выполнять на сервере
+
     if (memoryType === "Short Term" && memoryItems === "Numbers") {
       const sTNumbers = JSON.parse(localStorage.getItem("sTNumbers") || "[]");
-
       let sum = 0;
       for (let i = 0; i < sTNumbers.length; i++) {
         sum += sTNumbers[i];
@@ -31,7 +33,7 @@
     getMetric();
   });
 
-  $: if (metric || memoryType || memoryItems) {
+  $: if (metric && memoryType && memoryItems) {
     getMetric();
   }
 </script>
